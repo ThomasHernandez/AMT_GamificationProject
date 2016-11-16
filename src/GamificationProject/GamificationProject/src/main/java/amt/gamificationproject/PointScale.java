@@ -26,8 +26,6 @@ public class PointScale {
     private boolean isIntegerScale;
     private String unit;
     
-    @ElementCollection
-    private List<String> labels;
 
     public int getName() {
         return name;
@@ -77,19 +75,5 @@ public class PointScale {
         this.unit = unit;
     }
 
-    public List<String> getLabels() {
-        return labels;
-    }
-
-    public void setLabels(List<String> labels) {
-        this.labels = labels;
-    }
-    
-    
-    
-    
-    
-    
-    
     
 }
