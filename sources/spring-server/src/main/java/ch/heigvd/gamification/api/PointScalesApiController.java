@@ -6,7 +6,8 @@
 package ch.heigvd.gamification.api;
 
 import ch.heigvd.gamification.api.dto.NewPointScale;
-import ch.heigvd.gamification.api.dto.PointScale;
+import ch.heigvd.gamification.api.dto.PointScaleToClient;
+import ch.heigvd.gamification.model.PointScale;
 import java.util.LinkedList;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -20,26 +21,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class PointScalesApiController implements PointscalesApi{
 
     @Override
-    public ResponseEntity<List<PointScale>> pointscalesGet() {
-        List<PointScale> result = new LinkedList<>();
-        result.add(new PointScale().name("COCO"));
-        
-        return ResponseEntity.ok(result);
+    public ResponseEntity<List<PointScaleToClient>> pointscalesGet() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public ResponseEntity<Void> pointscalesIdDelete(Long id) {
-        return ResponseEntity.ok(null);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ResponseEntity<PointScale> pointscalesIdGet(Long id) {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<PointScaleToClient> pointscalesIdGet(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ResponseEntity<PointScale> pointscalesPost(NewPointScale pointScale) {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<PointScaleToClient> pointscalesPost(NewPointScale newPointScale) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
     
 }

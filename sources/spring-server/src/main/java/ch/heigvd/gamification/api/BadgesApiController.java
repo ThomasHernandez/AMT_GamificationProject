@@ -5,10 +5,14 @@
  */
 package ch.heigvd.gamification.api;
 
-import ch.heigvd.gamification.api.dto.Badge;
+import ch.heigvd.gamification.api.dao.BadgesRepositoryJPA;
+import ch.heigvd.gamification.api.dto.BadgeToClient;
+
 import ch.heigvd.gamification.api.dto.NewBadge;
+import ch.heigvd.gamification.model.Badge;
 import java.util.LinkedList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,27 +23,64 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BadgesApiController implements BadgesApi{
 
+    @Autowired
+    private BadgesRepositoryJPA badgeRepository;
+    
     @Override
-    public ResponseEntity<List<Badge>> badgesGet() {
-        List<Badge> result = new LinkedList<>();
-        result.add(new Badge().name("COCO"));
+    public ResponseEntity<List<BadgeToClient>> badgesGet() {
+        List<Badge> result = badgeRepository.findAll();
         
-        return ResponseEntity.ok(result);
+        List<BadgeToClient> resultToClient = new LinkedList<>();
+        
+        for(Badge b : result){
+            resultToClient.add(badgeToBadgeToClient(b));
+        }
+        
+        return ResponseEntity.ok().body(resultToClient);
+        
     }
 
     @Override
     public ResponseEntity<Void> badgesIdDelete(Long id) {
-         return ResponseEntity.ok(null);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ResponseEntity<Badge> badgesIdGet(Long id) {
-         return ResponseEntity.ok(null);
+    public ResponseEntity<BadgeToClient> badgesIdGet(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ResponseEntity<Badge> badgesPost(NewBadge pet) {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<BadgeToClient> badgesPost(NewBadge newBadge) {
+        
+        Badge newB = newBadgeToBadge(newBadge);
+        
+        badgeRepository.save(newB);
+        
+        return ResponseEntity.ok().body(badgeToBadgeToClient(newB));
+        
     }
+
+   
+    private BadgeToClient badgeToBadgeToClient(Badge badge){
+        
+        return new BadgeToClient().id(badge.getId())
+                                    .name(badge.getName())
+                                    .description(badge.getDescription())
+                                    .imageURI(badge.getImageURI());
+        
+    }
+    
+    private Badge newBadgeToBadge(NewBadge newBadge){
+        
+        Badge newB = new Badge();
+        newB.setName(newBadge.getName());
+        newB.setDescription(newBadge.getDescription());
+        newB.setImageURI(newBadge.getImageURI());
+        
+        return newB;
+        
+    }
+    
     
 }

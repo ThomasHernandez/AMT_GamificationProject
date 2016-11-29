@@ -29,14 +29,14 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/badge'
+              $ref: '#/definitions/badgeToClient'
         
     post:
       description: Creates a new badge in the system.  Duplicates are allowed
       consumes:
         - application/json
       parameters:
-        - name: pet
+        - name: newBadge
           in: body
           description: Badge to add to the system
           required: true
@@ -44,9 +44,9 @@ paths:
             $ref: '#/definitions/newBadge'
       responses:
         '200':
-          description: badge response
+          description: badge creation response
           schema:
-            $ref: '#/definitions/badge'
+            $ref: '#/definitions/badgeToClient'
         
   /badges/{id}:
     get:
@@ -64,10 +64,10 @@ paths:
         '200':
           description: badge response
           schema:
-            $ref: '#/definitions/badge'
+            $ref: '#/definitions/badgeToClient'
         
     delete:
-      description: deletes a single pet based on the ID supplied
+      description: deletes a single badge based on the ID supplied
       parameters:
         - name: id
           in: path
@@ -82,7 +82,7 @@ paths:
             
   /pointscales:
     get:
-      description: Returns all badges from the system that the user has access to
+      description: Returns all pointscales from the system that the user has access to
       produces:
         - application/json
       responses:
@@ -91,14 +91,14 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/pointScale'
+              $ref: '#/definitions/pointScaleToClient'
         
     post:
       description: Creates a new pointScale in the system.  Duplicates are allowed
       consumes:
         - application/json
       parameters:
-        - name: pointScale
+        - name: newPointScale
           in: body
           description: PointScale to add to the system
           required: true
@@ -108,11 +108,11 @@ paths:
         '200':
           description: pointScale response
           schema:
-            $ref: '#/definitions/pointScale'
+            $ref: '#/definitions/pointScaleToClient'
         
   /pointscales/{id}:
     get:
-      description: Returns the details of the badge based on a single ID
+      description: Returns the details of the pointscale based on a single ID
       produces:
         - application/json
       parameters:
@@ -126,7 +126,7 @@ paths:
         '200':
           description: pointScale response
           schema:
-            $ref: '#/definitions/pointScale'
+            $ref: '#/definitions/pointScaleToClient'
         
     delete:
       description: deletes a single pointScale based on the ID supplied
@@ -143,7 +143,7 @@ paths:
         
 
 definitions:
-  badge:
+  badgeToClient:
     type: object
     required:
       - id
@@ -173,7 +173,7 @@ definitions:
         type: string
       imageURI:
         type: string
-  pointScale:
+  pointScaleToClient:
     type: object
     required:
       - id
@@ -226,3 +226,15 @@ definitions:
       unit:
         type: string
   
+  gameEvent:
+    type: object
+    required:
+      - appId
+      - data
+    properties:
+      appId:
+        type: integer
+        format: int64
+      data:
+        type: string
+      
