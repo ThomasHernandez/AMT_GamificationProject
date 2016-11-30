@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ch.heigvd.gamification.api;
 
 import ch.heigvd.gamification.api.dao.BadgesRepositoryJPA;
@@ -14,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -24,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class BadgesApiController implements BadgesApi{
 
     @Autowired
-    private BadgesRepositoryJPA badgeRepository;
+    private BadgesRepositoryJPA badgesRepository;
     
     @Override
     public ResponseEntity<List<BadgeToClient>> badgesGet() {
-        List<Badge> result = badgeRepository.findAll();
+        List<Badge> result = badgesRepository.findAll();
         
         List<BadgeToClient> resultToClient = new LinkedList<>();
         
@@ -41,13 +37,28 @@ public class BadgesApiController implements BadgesApi{
     }
 
     @Override
-    public ResponseEntity<Void> badgesIdDelete(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ResponseEntity<Void> badgesIdDelete(@PathVariable Long id) {
+        
+        if(badgesRepository.findOne(id) != null){
+            badgesRepository.delete(id);
+            return ResponseEntity.status(204).body(null);
+        }
+        else{
+            return ResponseEntity.status(404).body(null);
+        }
+
+        
     }
 
     @Override
-    public ResponseEntity<BadgeToClient> badgesIdGet(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ResponseEntity<BadgeToClient> badgesIdGet(@PathVariable Long id) {
+        if(badgesRepository.findOne(id) != null){
+            
+            return ResponseEntity.ok().body(badgeToBadgeToClient(badgesRepository.findOne(id)));
+        }
+        else{
+            return ResponseEntity.status(404).body(null);
+        }
     }
 
     @Override
@@ -55,13 +66,15 @@ public class BadgesApiController implements BadgesApi{
         
         Badge newB = newBadgeToBadge(newBadge);
         
-        badgeRepository.save(newB);
+        badgesRepository.save(newB);
         
         return ResponseEntity.ok().body(badgeToBadgeToClient(newB));
         
     }
-
+    
    
+    //Helper methods
+    
     private BadgeToClient badgeToBadgeToClient(Badge badge){
         
         return new BadgeToClient().id(badge.getId())
