@@ -24,11 +24,42 @@ public class GamifiedApplication {
     private Long id;
     
     private String name;
+    private String authToken;
     
     @OneToMany
     private List<Badge> applicationBadges;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+
+    public List<Badge> getApplicationBadges() {
+        return applicationBadges;
+    }
+
+    public void setApplicationBadges(List<Badge> applicationBadges) {
+        this.applicationBadges = applicationBadges;
+    }
     
-    
-    
-    
+
 }

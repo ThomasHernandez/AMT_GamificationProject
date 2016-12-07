@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ch.heigvd.gamification.api;
 
 import ch.heigvd.gamification.api.dao.PointScalesRepositoryJPA;
@@ -40,12 +35,27 @@ public class PointScalesApiController implements PointscalesApi{
 
     @Override
     public ResponseEntity<Void> pointscalesIdDelete(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        if(pointScalesRepository.findOne(id) != null){
+            pointScalesRepository.delete(id);
+            return ResponseEntity.status(204).body(null);
+        }
+        else{
+            return ResponseEntity.status(404).body(null);
+        }
+        
+        
     }
 
     @Override
     public ResponseEntity<PointScaleToClient> pointscalesIdGet(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(pointScalesRepository.findOne(id) != null){
+            
+            return ResponseEntity.ok().body(pointScaleToPointScaleToClient(pointScalesRepository.findOne(id)));
+        }
+        else{
+            return ResponseEntity.status(404).body(null);
+        }
     }
 
     @Override
@@ -67,7 +77,8 @@ public class PointScalesApiController implements PointscalesApi{
                                     .lowerBound(pointScale.getLowerBound())
                                     .upperBound(pointScale.getUpperBound())
                                     .isIntegerScale(pointScale.getIsIntegerScale())
-                                    .unit(pointScale.getUnit());
+                                    .unit(pointScale.getUnit())
+                                    .currentValue(pointScale.getCurrentValue());
         
     }
     
@@ -80,6 +91,7 @@ public class PointScalesApiController implements PointscalesApi{
         newP.setUpperBound(newPointScale.getUpperBound());
         newP.setIsIntegerScale(newPointScale.getIsIntegerScale());
         newP.setUnit(newPointScale.getUnit());
+        newP.setCurrentValue(0.0);
         
         return newP;
         

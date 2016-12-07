@@ -1,9 +1,11 @@
 package ch.heigvd.gamification.model;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Entity
 public class PointScale {
 
     @Id
@@ -21,6 +23,14 @@ public class PointScale {
     private Boolean isIntegerScale;
 
     private String unit;
+    
+    private Double currentValue;
+
+    
+
+    public void setCurrentValue(Double currentValue) {
+        this.currentValue = currentValue;
+    }
 
     public Long getId() {
         return id;
@@ -78,6 +88,8 @@ public class PointScale {
         this.unit = unit;
     }
     
-    
+    public Double getCurrentValue() {
+        return currentValue;
+    }
     
 }

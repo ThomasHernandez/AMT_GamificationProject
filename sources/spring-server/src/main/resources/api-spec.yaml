@@ -35,6 +35,8 @@ paths:
       description: Creates a new badge in the system.  Duplicates are allowed
       consumes:
         - application/json
+      produces:
+        - application/json
       parameters:
         - name: newBadge
           in: body
@@ -96,6 +98,8 @@ paths:
     post:
       description: Creates a new pointScale in the system.  Duplicates are allowed
       consumes:
+        - application/json
+      produces:
         - application/json
       parameters:
         - name: newPointScale
@@ -201,6 +205,9 @@ definitions:
         type: boolean
       unit:
         type: string
+      currentValue:
+          type: number
+          format: double
   newPointScale:
     type: object
     required:
@@ -225,6 +232,30 @@ definitions:
         type: boolean
       unit:
         type: string
+  
+  newGamifiedApplication:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+      
+  gamifiedApplicationToClient:
+    type: object
+    required:
+      - name
+      - authToken
+      - badges
+    properties:
+      name:
+        type: string
+      authToken:
+        type: string
+      badges:
+        type: array
+        items: 
+          $ref: '#/definitions/badgeToClient'
   
   gameEvent:
     type: object
