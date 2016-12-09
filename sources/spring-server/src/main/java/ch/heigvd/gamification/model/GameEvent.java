@@ -1,25 +1,34 @@
 package ch.heigvd.gamification.model;
 
-import ch.heigvd.gamification.api.dto.*;
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 
 
+@Entity
 public class GameEvent   {
-    private Long appId;
+    
+    @Id
+    private Long appUserId;
+
+    private String eventType;
 
     private String data;
 
-    public Long getAppId() {
-        return appId;
+    public Long getAppUserId() {
+        return appUserId;
     }
 
-    public void setAppId(Long appId) {
-        this.appId = appId;
+    public void setAppUserId(Long appUserId) {
+        this.appUserId = appUserId;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
     }
 
     public String getData() {
@@ -29,6 +38,8 @@ public class GameEvent   {
     public void setData(String data) {
         this.data = data;
     }
+
+    
 
 }
 

@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -62,7 +63,8 @@ public class BadgesApiController implements BadgesApi{
     }
 
     @Override
-    public ResponseEntity<BadgeToClient> badgesPost(NewBadge newBadge) {
+    public ResponseEntity<BadgeToClient> badgesPost(@RequestHeader String authToken, NewBadge newBadge) {
+
         
         Badge newB = newBadgeToBadge(newBadge);
         
@@ -71,6 +73,8 @@ public class BadgesApiController implements BadgesApi{
         return ResponseEntity.ok().body(badgeToBadgeToClient(newB));
         
     }
+    
+    
     
    
     //Helper methods
