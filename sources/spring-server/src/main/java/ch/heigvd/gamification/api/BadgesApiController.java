@@ -74,10 +74,7 @@ public class BadgesApiController implements BadgesApi{
         
     }
     
-    
-    
-   
-    //Helper methods
+    //Helper methods for DTO conversion
     
     private BadgeToClient badgeToBadgeToClient(Badge badge){
         

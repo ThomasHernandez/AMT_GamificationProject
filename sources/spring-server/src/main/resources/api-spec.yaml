@@ -108,6 +108,11 @@ paths:
       produces:
         - application/json
       parameters:
+        - name: authToken
+          in: header
+          description: The token authenticating the application related to the pointscale
+          required: true
+          type: string
         - name: newPointScale
           in: body
           description: PointScale to add to the system
@@ -223,17 +228,22 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: newPointScale
+        - name: authToken
+          in: header
+          description: The token authenticating the application related to the event
+          required: true
+          type: string
+        - name: newGameEvent
           in: body
-          description: PointScale to add to the system
+          description: game event to be processed by the system
           required: true
           schema:
-            $ref: '#/definitions/gameEvent'
+            $ref: '#/definitions/newGameEvent'
       responses:
         '200':
           description: gameEvent response
           schema:
-            $ref: '#/definitions/gameEvent'
+            $ref: '#/definitions/newGameEvent'
         
 
 definitions:
@@ -350,7 +360,7 @@ definitions:
         items: 
           $ref: '#/definitions/badgeToClient'
   
-  gameEvent:
+  newGameEvent:
     type: object
     required:
       - appUserId

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApplicationsApiController implements ApplicationsApi{
 
     @Autowired
-    GamifiedApplicationRepositoryJPA applicationsRepository;
+    private GamifiedApplicationRepositoryJPA applicationsRepository;
     
     @Override
     public ResponseEntity<List<GamifiedApplicationToClient>> applicationsGet() {

@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -59,13 +60,12 @@ public class PointScalesApiController implements PointscalesApi{
     }
 
     @Override
-    public ResponseEntity<PointScaleToClient> pointscalesPost(NewPointScale newPointScale) {
+    public ResponseEntity<PointScaleToClient> pointscalesPost(@RequestHeader String authToken, NewPointScale newPointScale) {
         PointScale newP = newPointScaleToPointScale(newPointScale);
         pointScalesRepository.save(newP);
         return ResponseEntity.ok().body(pointScaleToPointScaleToClient(newP));
         
     }
-
     
      //Helper methods
     
