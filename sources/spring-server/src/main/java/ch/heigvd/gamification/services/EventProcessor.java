@@ -1,10 +1,12 @@
 package ch.heigvd.gamification.services;
 
-import ch.heigvd.gamification.api.dao.GameEventsRepositoryJPA;
-import ch.heigvd.gamification.api.dao.GamifiedApplicationRepositoryJPA;
+import ch.heigvd.gamification.api.dao.ApplicationUserRepositoryJPA;
+import ch.heigvd.gamification.model.ApplicationUser;
 import ch.heigvd.gamification.model.GameEvent;
 import ch.heigvd.gamification.model.GamifiedApplication;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,30 +16,45 @@ import org.springframework.stereotype.Service;
 @Service
 public class EventProcessor {
     
-    @Autowired 
-    private GamifiedApplicationRepositoryJPA applicationsRepository;
-    @Autowired
-    private GameEventsRepositoryJPA eventsRepository;
     
-    public void processEvent(String appToken, GameEvent e){
+    @Autowired
+    private  ApplicationUserRepositoryJPA usersRepository;
         
-        if(applicationsRepository == null){
-            
-            System.out.println("APPNULLCACA");
-        }
+    @Async
+    @Transactional
+    public void processEvent(GamifiedApplication app, GameEvent e){
         
-        GamifiedApplication app = applicationsRepository.findOneByAuthToken(appToken);
-        System.out.println(appToken);
-        if(app != null){
+        ApplicationUser targetUser = usersRepository.findByApplicationNameAndIdInGamifiedApplication(app.getName(), e.getAppUserId());
+        
+        if(targetUser == null){
             
-            System.out.println("COUCOU");
-           
+            targetUser = new ApplicationUser();
+            targetUser.setApplication(app);
+            targetUser.setIdInGamifiedApplication(e.getAppUserId());
+            targetUser.setNbEvents(1);
+            
+            usersRepository.save(targetUser);
+            
+            ApplicationUser tmp = usersRepository.findByApplicationNameAndIdInGamifiedApplication(app.getName(), e.getAppUserId());
+            
+            if(tmp == null){
+                
+                System.out.println("SHIIIIT");
+            }
+            else{
+                System.out.println("USER SAVED with app name: " + tmp.getApplication().getName());
+                
+            }
+                    
+            
         }
         else{
             
-            System.out.println("EPCACA");
+            targetUser.setNbEvents(targetUser.getNbEvents() + 1);
+            
         }
         
+           
         
         
         

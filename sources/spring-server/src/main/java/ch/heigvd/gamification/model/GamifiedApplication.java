@@ -24,6 +24,7 @@ public class GamifiedApplication {
     private Long id;
     
     private String name;
+    private String passwordHash;
     private String authToken;
     
     @OneToMany
@@ -45,6 +46,8 @@ public class GamifiedApplication {
         this.name = name;
     }
 
+    
+    
     public String getAuthToken() {
         return authToken;
     }
@@ -59,6 +62,14 @@ public class GamifiedApplication {
 
     public void setApplicationBadges(List<Badge> applicationBadges) {
         this.applicationBadges = applicationBadges;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
     
 

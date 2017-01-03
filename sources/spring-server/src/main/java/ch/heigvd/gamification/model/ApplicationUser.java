@@ -2,7 +2,10 @@ package ch.heigvd.gamification.model;
 
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -13,15 +16,21 @@ import javax.persistence.OneToMany;
 public class ApplicationUser {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private String username;
+    @ManyToOne
+    private GamifiedApplication application;
+    
+    private String idInGamifiedApplication;
     
     @OneToMany
     private List<Badge> awardedBadges;
     
     @OneToMany
     private List<PointScale> currentPoints;
+    
+    private int nbEvents;
 
     public Long getId() {
         return id;
@@ -29,14 +38,6 @@ public class ApplicationUser {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public List<Badge> getAwardedBadges() {
@@ -53,6 +54,30 @@ public class ApplicationUser {
 
     public void setCurrentPoints(List<PointScale> currentPoints) {
         this.currentPoints = currentPoints;
+    }
+
+    public int getNbEvents() {
+        return nbEvents;
+    }
+
+    public void setNbEvents(int nbEvents) {
+        this.nbEvents = nbEvents;
+    }
+
+    public String getIdInGamifiedApplication() {
+        return idInGamifiedApplication;
+    }
+
+    public void setIdInGamifiedApplication(String idInGamifiedApplication) {
+        this.idInGamifiedApplication = idInGamifiedApplication;
+    }
+
+    public GamifiedApplication getApplication() {
+        return application;
+    }
+
+    public void setApplication(GamifiedApplication application) {
+        this.application = application;
     }
     
     

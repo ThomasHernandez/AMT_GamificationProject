@@ -18,8 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PointScalesApiController implements PointscalesApi{
 
-    @Autowired
-    private PointScalesRepositoryJPA pointScalesRepository;
+    
+    private final PointScalesRepositoryJPA pointScalesRepository;
+
+    public PointScalesApiController(PointScalesRepositoryJPA pointScalesRepository) {
+        this.pointScalesRepository = pointScalesRepository;
+    }
     
     @Override
     public ResponseEntity<List<PointScaleToClient>> pointscalesGet() {

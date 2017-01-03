@@ -169,12 +169,11 @@ paths:
             type: array
             items:
               $ref: '#/definitions/gamifiedApplicationToClient'
-        
+ 
+  /registrations:      
     post:
       description: Registers a new application in the system.  Duplicates are not allowed
       consumes:
-        - application/json
-      produces:
         - application/json
       parameters:
         - name: newGamifiedApplication
@@ -184,10 +183,10 @@ paths:
           schema:
             $ref: '#/definitions/newGamifiedApplication'
       responses:
-        '200':
-          description: pointScale response
-          schema:
-            $ref: '#/definitions/gamifiedApplicationToClient'
+        '201':
+          description: new application created
+        '409':
+          description: application name already exists
         
   /applications/{id}:
     get:
@@ -225,8 +224,6 @@ paths:
       description: Send events to the event processor
       consumes:
         - application/json
-      produces:
-        - application/json
       parameters:
         - name: authToken
           in: header
@@ -240,11 +237,63 @@ paths:
           schema:
             $ref: '#/definitions/newGameEvent'
       responses:
+        '202':
+          description: gameEvent accepted
+        '422':
+          description: gameEvent unprocessable
+          
+  
+  /users/{idInApplication}:
+    get:
+      description:  Retrieve one user by id
+      produces:
+        - application/json
+      parameters:
+        - name: authToken
+          in: header
+          description: The token authenticating the application related to the user
+          required: true
+          type: string
+        - name: idInApplication
+          in: path
+          description: id of the user to fetch
+          required: true
+          type: string
+      responses:
         '200':
-          description: gameEvent response
+          description:
+              Returns the specified user state
           schema:
-            $ref: '#/definitions/newGameEvent'
-        
+            $ref: '#/definitions/applicationUserToClient'
+        '404':
+           description:
+              User not found
+           
+  /auth:
+    post:
+      description: get authentication token from registered application
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+      parameters:
+        - name: credentials
+          in: body
+          description: the target app credentials
+          required: true
+          schema:
+            $ref: '#/definitions/appCredentials'
+      responses:
+        '200':
+          description: good credentials, auth token
+          schema:
+            type: string
+        '400':
+          description: bad credentials
+          
+          
+  
+  
 
 definitions:
   badgeToClient:
@@ -368,9 +417,49 @@ definitions:
       - data
     properties:
       appUserId:
-        type: integer
-        format: int64
+        type: string
       eventType:
         type: string
       data:
         type: string
+        
+  appCredentials:
+    type: object
+    required:
+      - appName
+      - appPassword
+    properties:
+      appName:
+        type: string
+      appPassword:
+        type: string
+        
+  applicationUserToClient:
+    type: object
+    required:
+      - id
+      - applicationName
+      - idInApplication
+      - awardedBadges
+      - currentPoints
+      - nbEvents
+    properties:
+      id:
+        type: integer
+        format: int64
+      applicationName:
+        type: string
+      idInApplication:
+        type: string
+      awardedBadges:
+        type: array
+        items: 
+          $ref: '#/definitions/badgeToClient'
+      currentPoints:
+        type: array
+        items: 
+          $ref: '#/definitions/pointScaleToClient'
+      nbEvents:
+        type: integer
+        format: int32
+      

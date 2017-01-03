@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BadgesApiController implements BadgesApi{
 
-    @Autowired
-    private BadgesRepositoryJPA badgesRepository;
+    private final BadgesRepositoryJPA badgesRepository;
+
+    public BadgesApiController(BadgesRepositoryJPA badgesRepository) {
+        this.badgesRepository = badgesRepository;
+    }
     
     @Override
     public ResponseEntity<List<BadgeToClient>> badgesGet() {

@@ -1,11 +1,14 @@
 package ch.heigvd.gamification.api;
 
-import ch.heigvd.gamification.api.dao.GameEventsRepositoryJPA;
+import ch.heigvd.gamification.api.dao.GamifiedApplicationRepositoryJPA;
 import ch.heigvd.gamification.api.dto.NewGameEvent;
 import ch.heigvd.gamification.model.GameEvent;
+import ch.heigvd.gamification.model.GamifiedApplication;
 import ch.heigvd.gamification.services.EventProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,26 +19,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EventsApiController implements EventsApi{
 
-    @Autowired 
-    private GameEventsRepositoryJPA eventsRepository;
-    
-    private EventProcessor ep = new EventProcessor();
-    
+    @Autowired
+    private GamifiedApplicationRepositoryJPA applicationsRepository;
+    @Autowired
+    private EventProcessor eventProcessor;
+
     
     
     @Override
-    public ResponseEntity<NewGameEvent> eventsPost(@RequestHeader String authToken, NewGameEvent newGameEvent) {
+    public ResponseEntity eventsPost(@RequestHeader String authToken, @RequestBody NewGameEvent newGameEvent) {
 
-        GameEvent newGE = newGameEventToGameEvent(newGameEvent);
         
-        eventsRepository.save(newGE);
-                
-        //ep.processEvent(authToken, newGE);
+        String targetUserId = newGameEvent.getAppUserId();
+        GamifiedApplication targetApp = applicationsRepository.findByAuthToken(authToken);
         
-        return ResponseEntity.ok().body(GameEventToNewGameEvent(newGE));
+        if(targetApp == null || targetUserId == null){
+            
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+            
+        }
+        eventProcessor.processEvent(targetApp, newGameEventToGameEvent(newGameEvent));
+        
+        return ResponseEntity.accepted().build();
         
 
     } 
+    
     
     
     public static GameEvent newGameEventToGameEvent(NewGameEvent newGameEvent){

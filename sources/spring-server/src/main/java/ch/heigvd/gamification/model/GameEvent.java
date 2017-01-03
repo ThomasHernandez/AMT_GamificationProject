@@ -9,17 +9,17 @@ import javax.persistence.Id;
 public class GameEvent   {
     
     @Id
-    private Long appUserId;
+    private String appUserId;
 
     private String eventType;
 
     private String data;
 
-    public Long getAppUserId() {
+    public String getAppUserId() {
         return appUserId;
     }
 
-    public void setAppUserId(Long appUserId) {
+    public void setAppUserId(String appUserId) {
         this.appUserId = appUserId;
     }
 

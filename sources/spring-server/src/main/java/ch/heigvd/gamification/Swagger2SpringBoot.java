@@ -10,7 +10,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-@ComponentScan(basePackages = "ch.heigvd.gamification.api")
+@ComponentScan(basePackages = "ch.heigvd.gamification")
 public class Swagger2SpringBoot implements CommandLineRunner {
 
 	@Override

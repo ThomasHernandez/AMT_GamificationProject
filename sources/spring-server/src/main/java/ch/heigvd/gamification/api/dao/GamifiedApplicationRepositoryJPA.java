@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface GamifiedApplicationRepositoryJPA extends JpaRepository<GamifiedApplication, Long>{
     
-    
-    public GamifiedApplication findOneByAuthToken(String authToken);
+    public GamifiedApplication findByName(String appName);
+    public GamifiedApplication findByAuthToken(String authToken);
     
 }

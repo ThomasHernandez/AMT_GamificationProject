@@ -3,13 +3,10 @@ package ch.heigvd.gamification.api;
 import ch.heigvd.gamification.api.dao.GamifiedApplicationRepositoryJPA;
 import ch.heigvd.gamification.api.dto.BadgeToClient;
 import ch.heigvd.gamification.api.dto.GamifiedApplicationToClient;
-import ch.heigvd.gamification.api.dto.NewGamifiedApplication;
 import ch.heigvd.gamification.model.Badge;
 import ch.heigvd.gamification.model.GamifiedApplication;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,8 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ApplicationsApiController implements ApplicationsApi{
 
-    @Autowired
-    private GamifiedApplicationRepositoryJPA applicationsRepository;
+    private final GamifiedApplicationRepositoryJPA applicationsRepository;
+
+    public ApplicationsApiController(GamifiedApplicationRepositoryJPA applicationsRepository) {
+        this.applicationsRepository = applicationsRepository;
+    }
+    
+    
     
     @Override
     public ResponseEntity<List<GamifiedApplicationToClient>> applicationsGet() {
@@ -64,32 +66,7 @@ public class ApplicationsApiController implements ApplicationsApi{
         
         
     }
-
-    @Override
-    public ResponseEntity<GamifiedApplicationToClient> applicationsPost(NewGamifiedApplication newGamifiedApplication) {
-        
-        GamifiedApplication newA = newGamifiedApplicationToGamifiedApplication(newGamifiedApplication);
-        
-        applicationsRepository.save(newA);
-                
-        return ResponseEntity.ok().body(gamifiedApplicationToGamifiedApplicationToClient(newA));
-
-
-    }
-
     
-    
-    
-    private GamifiedApplication newGamifiedApplicationToGamifiedApplication(NewGamifiedApplication newApp){
-        
-        GamifiedApplication newA = new GamifiedApplication();
-        newA.setName(newApp.getName());
-        
-        UUID newToken = UUID.randomUUID();
-        newA.setAuthToken(newToken.toString());
-        
-        return newA;
-    }
     
     private GamifiedApplicationToClient gamifiedApplicationToGamifiedApplicationToClient(GamifiedApplication app){
         
