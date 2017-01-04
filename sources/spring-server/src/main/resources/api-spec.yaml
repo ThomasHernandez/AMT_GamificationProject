@@ -291,7 +291,28 @@ paths:
         '400':
           description: bad credentials
           
-          
+  /rules:
+    post:
+      description: set a new rule for a given application and a given pointscale awarding a given badge
+      consumes:
+        - application/json
+      parameters:
+        - name: authToken
+          in: header
+          description: The token authenticating the application related to the rule
+          required: true
+          type: string
+        - name: newRule
+          in: body
+          description: The new rule to set
+          required: true
+          schema:
+            $ref: '#/definitions/newRule'
+      responses:
+        '201':
+          description: rule created
+        '422':
+          description: rule unprocessable
   
   
 
@@ -399,6 +420,8 @@ definitions:
       - name
       - authToken
       - badges
+      - pointScales
+      - rules
     properties:
       name:
         type: string
@@ -408,20 +431,32 @@ definitions:
         type: array
         items: 
           $ref: '#/definitions/badgeToClient'
+      pointScales:
+        type: array
+        items: 
+          $ref: '#/definitions/pointScaleToClient'
+      rules:
+        type: array
+        items: 
+          $ref: '#/definitions/ruleToClient'
   
   newGameEvent:
     type: object
     required:
       - appUserId
       - eventType
-      - data
+      - pointScaleToUpdateName
+      - newPoints
     properties:
       appUserId:
         type: string
       eventType:
         type: string
-      data:
+      pointScaleToUpdateName:
         type: string
+      newPoints:
+        type: number
+        format: double
         
   appCredentials:
     type: object
@@ -463,3 +498,51 @@ definitions:
         type: integer
         format: int32
       
+      
+  newRule:
+    type: object
+    required:
+      - name
+      - description
+      - eventType
+      - pointScaleName
+      - badgeName
+      - valueToReach
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      eventType:
+        type: string
+      pointScaleName:
+        type: string
+      badgeName:
+        type: string
+      valueToReach:
+        type: number
+        format: double
+        
+  ruleToClient:
+    type: object
+    required:
+      - name
+      - description
+      - eventType
+      - pointScaleName
+      - badgeName
+      - valueToReach
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      eventType:
+        type: string
+      pointScaleName:
+        type: string
+      badgeName:
+        type: string
+      valueToReach:
+        type: number
+        format: double

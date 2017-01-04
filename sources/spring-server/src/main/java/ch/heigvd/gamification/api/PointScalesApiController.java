@@ -1,13 +1,19 @@
 package ch.heigvd.gamification.api;
 
+import ch.heigvd.gamification.api.dao.GamifiedApplicationRepositoryJPA;
 import ch.heigvd.gamification.api.dao.PointScalesRepositoryJPA;
 import ch.heigvd.gamification.api.dto.NewPointScale;
 import ch.heigvd.gamification.api.dto.PointScaleToClient;
+import ch.heigvd.gamification.model.GamifiedApplication;
 import ch.heigvd.gamification.model.PointScale;
+import ch.heigvd.gamification.utils.ModelClassConverter;
 import java.util.LinkedList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,12 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PointScalesApiController implements PointscalesApi{
 
-    
-    private final PointScalesRepositoryJPA pointScalesRepository;
-
-    public PointScalesApiController(PointScalesRepositoryJPA pointScalesRepository) {
-        this.pointScalesRepository = pointScalesRepository;
-    }
+    @Autowired
+    private PointScalesRepositoryJPA pointScalesRepository;
+    @Autowired
+    private GamifiedApplicationRepositoryJPA applicationsRepository;
     
     @Override
     public ResponseEntity<List<PointScaleToClient>> pointscalesGet() {
@@ -32,14 +36,14 @@ public class PointScalesApiController implements PointscalesApi{
         List<PointScaleToClient> resultToClient = new LinkedList<>();
         
         for(PointScale p : result){
-            resultToClient.add(pointScaleToPointScaleToClient(p));
+            resultToClient.add(ModelClassConverter.pointScaleToPointScaleToClient(p));
         }
         return ResponseEntity.ok().body(resultToClient);
 
     }
 
     @Override
-    public ResponseEntity<Void> pointscalesIdDelete(Long id) {
+    public ResponseEntity<Void> pointscalesIdDelete(@PathVariable Long id) {
         
         if(pointScalesRepository.findOne(id) != null){
             pointScalesRepository.delete(id);
@@ -53,10 +57,10 @@ public class PointScalesApiController implements PointscalesApi{
     }
 
     @Override
-    public ResponseEntity<PointScaleToClient> pointscalesIdGet(Long id) {
+    public ResponseEntity<PointScaleToClient> pointscalesIdGet(@PathVariable Long id) {
         if(pointScalesRepository.findOne(id) != null){
             
-            return ResponseEntity.ok().body(pointScaleToPointScaleToClient(pointScalesRepository.findOne(id)));
+            return ResponseEntity.ok().body(ModelClassConverter.pointScaleToPointScaleToClient(pointScalesRepository.findOne(id)));
         }
         else{
             return ResponseEntity.status(404).body(null);
@@ -64,42 +68,26 @@ public class PointScalesApiController implements PointscalesApi{
     }
 
     @Override
-    public ResponseEntity<PointScaleToClient> pointscalesPost(@RequestHeader String authToken, NewPointScale newPointScale) {
-        PointScale newP = newPointScaleToPointScale(newPointScale);
-        pointScalesRepository.save(newP);
-        return ResponseEntity.ok().body(pointScaleToPointScaleToClient(newP));
+    public ResponseEntity<PointScaleToClient> pointscalesPost(@RequestHeader String authToken, @RequestBody NewPointScale newPointScale) {
+        
+        GamifiedApplication targetApp = applicationsRepository.findByAuthToken(authToken);
+        
+        if(targetApp != null){
+            
+            if(pointScalesRepository.findByName(newPointScale.getName()) == null){
+                
+                PointScale newP = ModelClassConverter.newPointScaleToPointScale(newPointScale);
+                pointScalesRepository.save(newP);
+                targetApp.getApplicationPointScales().add(newP);
+                applicationsRepository.save(targetApp);
+                return ResponseEntity.ok().body(ModelClassConverter.pointScaleToPointScaleToClient(newP));
+                
+            }
+        }
+        
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        
         
     }
-    
-     //Helper methods
-    
-    private PointScaleToClient pointScaleToPointScaleToClient(PointScale pointScale){
-        
-        return new PointScaleToClient().id(pointScale.getId())
-                                    .name(pointScale.getName())
-                                    .description(pointScale.getDescription())
-                                    .lowerBound(pointScale.getLowerBound())
-                                    .upperBound(pointScale.getUpperBound())
-                                    .isIntegerScale(pointScale.getIsIntegerScale())
-                                    .unit(pointScale.getUnit())
-                                    .currentValue(pointScale.getCurrentValue());
-        
-    }
-    
-    private PointScale newPointScaleToPointScale(NewPointScale newPointScale){
-        
-        PointScale newP = new PointScale();
-        newP.setName(newPointScale.getName());
-        newP.setDescription(newPointScale.getDescription());
-        newP.setLowerBound(newPointScale.getLowerBound());
-        newP.setUpperBound(newPointScale.getUpperBound());
-        newP.setIsIntegerScale(newPointScale.getIsIntegerScale());
-        newP.setUnit(newPointScale.getUnit());
-        newP.setCurrentValue(0.0);
-        
-        return newP;
-        
-    }
-    
     
 }

@@ -1,15 +1,19 @@
 package ch.heigvd.gamification.api;
 
 import ch.heigvd.gamification.api.dao.BadgesRepositoryJPA;
+import ch.heigvd.gamification.api.dao.GamifiedApplicationRepositoryJPA;
 import ch.heigvd.gamification.api.dto.BadgeToClient;
-
 import ch.heigvd.gamification.api.dto.NewBadge;
 import ch.heigvd.gamification.model.Badge;
+import ch.heigvd.gamification.model.GamifiedApplication;
+import ch.heigvd.gamification.utils.ModelClassConverter;
 import java.util.LinkedList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,11 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BadgesApiController implements BadgesApi{
 
-    private final BadgesRepositoryJPA badgesRepository;
-
-    public BadgesApiController(BadgesRepositoryJPA badgesRepository) {
-        this.badgesRepository = badgesRepository;
-    }
+    @Autowired
+    private BadgesRepositoryJPA badgesRepository;
+    @Autowired
+    private GamifiedApplicationRepositoryJPA applicationsRepository;
     
     @Override
     public ResponseEntity<List<BadgeToClient>> badgesGet() {
@@ -33,7 +36,7 @@ public class BadgesApiController implements BadgesApi{
         List<BadgeToClient> resultToClient = new LinkedList<>();
         
         for(Badge b : result){
-            resultToClient.add(badgeToBadgeToClient(b));
+            resultToClient.add(ModelClassConverter.badgeToBadgeToClient(b));
         }
         
         return ResponseEntity.ok().body(resultToClient);
@@ -50,7 +53,6 @@ public class BadgesApiController implements BadgesApi{
         else{
             return ResponseEntity.status(404).body(null);
         }
-
         
     }
 
@@ -58,7 +60,7 @@ public class BadgesApiController implements BadgesApi{
     public ResponseEntity<BadgeToClient> badgesIdGet(@PathVariable Long id) {
         if(badgesRepository.findOne(id) != null){
             
-            return ResponseEntity.ok().body(badgeToBadgeToClient(badgesRepository.findOne(id)));
+            return ResponseEntity.ok().body(ModelClassConverter.badgeToBadgeToClient(badgesRepository.findOne(id)));
         }
         else{
             return ResponseEntity.status(404).body(null);
@@ -66,38 +68,26 @@ public class BadgesApiController implements BadgesApi{
     }
 
     @Override
-    public ResponseEntity<BadgeToClient> badgesPost(@RequestHeader String authToken, NewBadge newBadge) {
-
+    public ResponseEntity<BadgeToClient> badgesPost(@RequestHeader String authToken, @RequestBody NewBadge newBadge) {
         
-        Badge newB = newBadgeToBadge(newBadge);
+        GamifiedApplication targetApp = applicationsRepository.findByAuthToken(authToken);
         
-        badgesRepository.save(newB);
+        if(targetApp != null){
+            
+            if(badgesRepository.findByName(newBadge.getName()) == null){
+                
+                Badge newB = ModelClassConverter.newBadgeToBadge(newBadge);
+                badgesRepository.save(newB);
+                targetApp.getApplicationBadges().add(newB);
+                applicationsRepository.save(targetApp);
+                return ResponseEntity.ok().body(ModelClassConverter.badgeToBadgeToClient(newB));
+                
+            }
+        }
         
-        return ResponseEntity.ok().body(badgeToBadgeToClient(newB));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         
-    }
-    
-    //Helper methods for DTO conversion
-    
-    private BadgeToClient badgeToBadgeToClient(Badge badge){
-        
-        return new BadgeToClient().id(badge.getId())
-                                    .name(badge.getName())
-                                    .description(badge.getDescription())
-                                    .imageURI(badge.getImageURI());
-        
-    }
-    
-    private Badge newBadgeToBadge(NewBadge newBadge){
-        
-        Badge newB = new Badge();
-        newB.setName(newBadge.getName());
-        newB.setDescription(newBadge.getDescription());
-        newB.setImageURI(newBadge.getImageURI());
-        
-        return newB;
         
     }
-    
     
 }

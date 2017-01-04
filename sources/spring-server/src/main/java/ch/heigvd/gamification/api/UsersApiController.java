@@ -28,7 +28,7 @@ public class UsersApiController implements UsersApi{
             
         if(user != null){
             
-            return ResponseEntity.ok().body(applicationUserToApplicationUserToClient(user));
+            return ResponseEntity.ok().body(ModelClassConverter.applicationUserToApplicationUserToClient(user));
             
         }
         else{
@@ -38,22 +38,6 @@ public class UsersApiController implements UsersApi{
         }
         
     }
-    
-    private ApplicationUserToClient applicationUserToApplicationUserToClient(ApplicationUser appUser){
-        
-        ApplicationUserToClient appUserToClient = new ApplicationUserToClient();
-        
-        appUserToClient.setApplicationName(appUser.getApplication().getName());
-        appUserToClient.setAwardedBadges(ModelClassConverter.badgeListToBadgeToClientList(appUser.getAwardedBadges()));
-        appUserToClient.setCurrentPoints(ModelClassConverter.pointScaleListToPointScaleToClientList(appUser.getCurrentPoints()));
-        appUserToClient.setId(appUser.getId());
-        appUserToClient.setIdInApplication(appUser.getIdInGamifiedApplication());
-        appUserToClient.setNbEvents(appUser.getNbEvents());
-        
-        return appUserToClient;
-        
-    }
-    
     
     
 }

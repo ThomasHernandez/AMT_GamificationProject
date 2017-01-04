@@ -13,7 +13,25 @@ public class GameEvent   {
 
     private String eventType;
 
-    private String data;
+    private String pointScaleToUpdateName;
+    
+    private double newPoints;
+
+    public String getPointScaleToUpdate() {
+        return pointScaleToUpdateName;
+    }
+
+    public void setPointScaleToUpdate(String pointScaleToUpdateName) {
+        this.pointScaleToUpdateName = pointScaleToUpdateName;
+    }
+
+    public double getNewPoints() {
+        return newPoints;
+    }
+
+    public void setNewPoints(double newPoints) {
+        this.newPoints = newPoints;
+    }
 
     public String getAppUserId() {
         return appUserId;
@@ -31,13 +49,6 @@ public class GameEvent   {
         this.eventType = eventType;
     }
 
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
 
     
 

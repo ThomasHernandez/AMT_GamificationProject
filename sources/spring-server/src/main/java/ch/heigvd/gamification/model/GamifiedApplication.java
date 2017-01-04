@@ -29,6 +29,12 @@ public class GamifiedApplication {
     
     @OneToMany
     private List<Badge> applicationBadges;
+    
+    @OneToMany
+    private List<Rule> applicationRules;
+    
+    @OneToMany
+    private List<PointScale> applicationPointScales;
 
     public Long getId() {
         return id;
@@ -45,8 +51,6 @@ public class GamifiedApplication {
     public void setName(String name) {
         this.name = name;
     }
-
-    
     
     public String getAuthToken() {
         return authToken;
@@ -70,6 +74,22 @@ public class GamifiedApplication {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public List<Rule> getApplicationRules() {
+        return applicationRules;
+    }
+
+    public void setApplicationRules(List<Rule> applicationRules) {
+        this.applicationRules = applicationRules;
+    }
+
+    public List<PointScale> getApplicationPointScales() {
+        return applicationPointScales;
+    }
+
+    public void setApplicationPointScales(List<PointScale> applicationPointScales) {
+        this.applicationPointScales = applicationPointScales;
     }
     
 

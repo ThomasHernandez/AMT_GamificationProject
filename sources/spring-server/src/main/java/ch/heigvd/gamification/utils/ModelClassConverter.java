@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ch.heigvd.gamification.utils;
 
 import ch.heigvd.gamification.api.dto.ApplicationUserToClient;
@@ -12,12 +7,15 @@ import ch.heigvd.gamification.api.dto.NewBadge;
 import ch.heigvd.gamification.api.dto.NewGameEvent;
 import ch.heigvd.gamification.api.dto.NewGamifiedApplication;
 import ch.heigvd.gamification.api.dto.NewPointScale;
+import ch.heigvd.gamification.api.dto.NewRule;
 import ch.heigvd.gamification.api.dto.PointScaleToClient;
+import ch.heigvd.gamification.api.dto.RuleToClient;
 import ch.heigvd.gamification.model.ApplicationUser;
 import ch.heigvd.gamification.model.Badge;
 import ch.heigvd.gamification.model.GameEvent;
 import ch.heigvd.gamification.model.GamifiedApplication;
 import ch.heigvd.gamification.model.PointScale;
+import ch.heigvd.gamification.model.Rule;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -34,7 +32,34 @@ public class ModelClassConverter {
         
         return new GamifiedApplicationToClient().name(app.getName())
                                                 .authToken(app.getAuthToken())
-                                                .badges(badgeListToBadgeToClientList(app.getApplicationBadges()));
+                                                .badges(badgeListToBadgeToClientList(app.getApplicationBadges()))
+                                                .pointScales(pointScaleListToPointScaleToClientList(app.getApplicationPointScales()))
+                                                .rules(rulesListToRuleToClientList(app.getApplicationRules()));
+        
+        
+        
+    }
+    
+    public static List<RuleToClient> rulesListToRuleToClientList(List<Rule> rules){
+        
+        List<RuleToClient> rulesToClient = new LinkedList<>();
+        
+        if(rules != null){
+            
+            for(Rule r : rules){
+            
+                RuleToClient tmp =  new RuleToClient().name(r.getName())
+                                                      .description(r.getDescription())
+                                                      .eventType(r.getEventType())
+                                                      .pointScaleName(r.getPointScaleToCheck().getName())
+                                                      .valueToReach(r.getValueToReach())
+                                                      .badgeName(r.getBadgeToAward().getName());
+
+                rulesToClient.add(tmp);
+            }
+        }
+        
+        return rulesToClient;
         
     }
     
@@ -85,18 +110,13 @@ public class ModelClassConverter {
         GameEvent newG = new GameEvent();
         
         newG.setAppUserId(newGameEvent.getAppUserId());
-        newG.setEventType(newGameEvent.getData());
-        newG.setData(newGameEvent.getData());
+        newG.setPointScaleToUpdate(newGameEvent.getPointScaleToUpdateName());
+        newG.setEventType(newGameEvent.getEventType());
+        newG.setNewPoints(newGameEvent.getNewPoints());
         
         return newG;
     }
     
-    public static NewGameEvent GameEventToNewGameEvent(GameEvent gameEvent){
-        
-        return new NewGameEvent().appUserId(gameEvent.getAppUserId())
-                                 .eventType(gameEvent.getEventType())
-                                 .data(gameEvent.getData());
-    }
     
     public static PointScaleToClient pointScaleToPointScaleToClient(PointScale pointScale){
         
@@ -176,6 +196,19 @@ public class ModelClassConverter {
         appUserToClient.setNbEvents(appUser.getNbEvents());
         
         return appUserToClient;
+        
+    }
+    
+    public static Rule newRuleToRule(NewRule newRule){
+        
+        Rule rule = new Rule();
+        
+        rule.setName(newRule.getName());
+        rule.setDescription(newRule.getDescription());
+        rule.setEventType(newRule.getEventType());
+        rule.setValueToReach(newRule.getValueToReach());
+        
+        return rule;
         
     }
     
