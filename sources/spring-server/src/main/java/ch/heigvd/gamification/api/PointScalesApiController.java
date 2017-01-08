@@ -29,6 +29,10 @@ public class PointScalesApiController implements PointscalesApi{
     @Autowired
     private GamifiedApplicationRepositoryJPA applicationsRepository;
     
+    /**
+     *
+     * @return
+     */
     @Override
     public ResponseEntity<List<PointScaleToClient>> pointscalesGet() {
         List<PointScale> result = pointScalesRepository.findAll();
@@ -42,6 +46,11 @@ public class PointScalesApiController implements PointscalesApi{
 
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public ResponseEntity<Void> pointscalesIdDelete(@PathVariable Long id) {
         
@@ -56,6 +65,11 @@ public class PointScalesApiController implements PointscalesApi{
         
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public ResponseEntity<PointScaleToClient> pointscalesIdGet(@PathVariable Long id) {
         if(pointScalesRepository.findOne(id) != null){
@@ -67,6 +81,12 @@ public class PointScalesApiController implements PointscalesApi{
         }
     }
 
+    /**
+     *
+     * @param authToken
+     * @param newPointScale
+     * @return
+     */
     @Override
     public ResponseEntity<PointScaleToClient> pointscalesPost(@RequestHeader String authToken, @RequestBody NewPointScale newPointScale) {
         

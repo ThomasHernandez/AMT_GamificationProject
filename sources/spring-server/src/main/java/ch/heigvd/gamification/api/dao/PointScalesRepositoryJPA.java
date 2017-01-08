@@ -10,6 +10,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface PointScalesRepositoryJPA extends JpaRepository<PointScale, Long>{
     
+    /**
+     *
+     * @param pointScaleName
+     * @return
+     */
     public PointScale findByName(String pointScaleName);
     
 }

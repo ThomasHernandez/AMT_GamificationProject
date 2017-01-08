@@ -8,19 +8,33 @@ import org.springframework.context.annotation.ComponentScan;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ *
+ * @author Antony
+ */
 @SpringBootApplication
 @EnableSwagger2
 @ComponentScan(basePackages = "ch.heigvd.gamification")
 public class Swagger2SpringBoot implements CommandLineRunner {
 
-	@Override
+    /**
+     *
+     * @param arg0
+     * @throws Exception
+     */
+    @Override
 	public void run(String... arg0) throws Exception {
 		if (arg0.length > 0 && arg0[0].equals("exitcode")) {
 			throw new ExitException();
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
+    /**
+     *
+     * @param args
+     * @throws Exception
+     */
+    public static void main(String[] args) throws Exception {
 		new SpringApplication(Swagger2SpringBoot.class).run(args);
 	}
 

@@ -24,6 +24,11 @@ public class EventProcessor {
     @Autowired
     private  ApplicationUserRepositoryJPA usersRepository;
         
+    /**
+     *
+     * @param app
+     * @param e
+     */
     @Async
     @Transactional
     public void processEvent(GamifiedApplication app, GameEvent e){

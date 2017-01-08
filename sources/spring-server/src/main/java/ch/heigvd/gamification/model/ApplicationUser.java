@@ -32,50 +32,98 @@ public class ApplicationUser {
     
     private int nbEvents;
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Badge> getAwardedBadges() {
         return awardedBadges;
     }
 
+    /**
+     *
+     * @param awardedBadges
+     */
     public void setAwardedBadges(List<Badge> awardedBadges) {
         this.awardedBadges = awardedBadges;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<PointScale> getCurrentPoints() {
         return currentPoints;
     }
 
+    /**
+     *
+     * @param currentPoints
+     */
     public void setCurrentPoints(List<PointScale> currentPoints) {
         this.currentPoints = currentPoints;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNbEvents() {
         return nbEvents;
     }
 
+    /**
+     *
+     * @param nbEvents
+     */
     public void setNbEvents(int nbEvents) {
         this.nbEvents = nbEvents;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getIdInGamifiedApplication() {
         return idInGamifiedApplication;
     }
 
+    /**
+     *
+     * @param idInGamifiedApplication
+     */
     public void setIdInGamifiedApplication(String idInGamifiedApplication) {
         this.idInGamifiedApplication = idInGamifiedApplication;
     }
 
+    /**
+     *
+     * @return
+     */
     public GamifiedApplication getApplication() {
         return application;
     }
 
+    /**
+     *
+     * @param application
+     */
     public void setApplication(GamifiedApplication application) {
         this.application = application;
     }

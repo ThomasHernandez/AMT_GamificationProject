@@ -19,6 +19,12 @@ public class UsersApiController implements UsersApi{
     @Autowired
     private  ApplicationUserRepositoryJPA appUsersRepository;
 
+    /**
+     *
+     * @param authToken
+     * @param idInApplication
+     * @return
+     */
     @Override
     public ResponseEntity<ApplicationUserToClient> usersIdInApplicationGet(String authToken, String idInApplication) {
         

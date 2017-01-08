@@ -21,6 +21,11 @@ public class RegistrationsApiController implements RegistrationsApi{
     @Autowired
     private GamifiedApplicationRepositoryJPA applicationsRepository;    
 
+    /**
+     *
+     * @param newGamifiedApplication
+     * @return
+     */
     @Override
     public ResponseEntity registrationsPost(@RequestBody NewGamifiedApplication newGamifiedApplication) {
         

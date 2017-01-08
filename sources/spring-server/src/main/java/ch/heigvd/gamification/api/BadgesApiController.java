@@ -29,6 +29,10 @@ public class BadgesApiController implements BadgesApi{
     @Autowired
     private GamifiedApplicationRepositoryJPA applicationsRepository;
     
+    /**
+     *
+     * @return
+     */
     @Override
     public ResponseEntity<List<BadgeToClient>> badgesGet() {
         List<Badge> result = badgesRepository.findAll();
@@ -43,6 +47,11 @@ public class BadgesApiController implements BadgesApi{
         
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public ResponseEntity<Void> badgesIdDelete(@PathVariable Long id) {
         
@@ -56,6 +65,11 @@ public class BadgesApiController implements BadgesApi{
         
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public ResponseEntity<BadgeToClient> badgesIdGet(@PathVariable Long id) {
         if(badgesRepository.findOne(id) != null){
@@ -67,6 +81,12 @@ public class BadgesApiController implements BadgesApi{
         }
     }
 
+    /**
+     *
+     * @param authToken
+     * @param newBadge
+     * @return
+     */
     @Override
     public ResponseEntity<BadgeToClient> badgesPost(@RequestHeader String authToken, @RequestBody NewBadge newBadge) {
         

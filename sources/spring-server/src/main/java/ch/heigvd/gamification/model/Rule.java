@@ -37,66 +37,130 @@ public class Rule {
     
     double valueToReach;
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     *
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEventType() {
         return eventType;
     }
 
+    /**
+     *
+     * @param eventType
+     */
     public void setEventType(String eventType) {
         this.eventType = eventType;
     }
 
+    /**
+     *
+     * @return
+     */
     public GamifiedApplication getApplication() {
         return application;
     }
 
+    /**
+     *
+     * @param application
+     */
     public void setApplication(GamifiedApplication application) {
         this.application = application;
     }
 
+    /**
+     *
+     * @return
+     */
     public PointScale getPointScaleToCheck() {
         return pointScaleToCheck;
     }
 
+    /**
+     *
+     * @param pointScaleToCheck
+     */
     public void setPointScaleToCheck(PointScale pointScaleToCheck) {
         this.pointScaleToCheck = pointScaleToCheck;
     }
 
+    /**
+     *
+     * @return
+     */
     public Badge getBadgeToAward() {
         return badgeToAward;
     }
 
+    /**
+     *
+     * @param badgeToAward
+     */
     public void setBadgeToAward(Badge badgeToAward) {
         this.badgeToAward = badgeToAward;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getValueToReach() {
         return valueToReach;
     }
 
+    /**
+     *
+     * @param valueToReach
+     */
     public void setValueToReach(double valueToReach) {
         this.valueToReach = valueToReach;
     }

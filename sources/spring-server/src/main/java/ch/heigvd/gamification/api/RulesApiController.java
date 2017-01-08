@@ -34,6 +34,12 @@ public class RulesApiController implements RulesApi{
     @Autowired
     private RulesRepositoryJPA rulesRepository;
     
+    /**
+     *
+     * @param authToken
+     * @param newRule
+     * @return
+     */
     @Override
     public ResponseEntity<Void> rulesPost(@RequestHeader String authToken, @RequestBody NewRule newRule) {
         

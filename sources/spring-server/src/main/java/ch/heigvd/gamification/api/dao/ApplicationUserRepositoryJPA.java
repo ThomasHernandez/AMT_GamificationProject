@@ -14,7 +14,20 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ApplicationUserRepositoryJPA extends JpaRepository<ApplicationUser, Long> {
     
+    /**
+     *
+     * @param appName
+     * @param userIdInApp
+     * @return
+     */
     public ApplicationUser findByApplicationNameAndIdInGamifiedApplication(String appName, String userIdInApp);
+
+    /**
+     *
+     * @param authToken
+     * @param userIdInApp
+     * @return
+     */
     public ApplicationUser findByApplicationAuthTokenAndIdInGamifiedApplication(String authToken, String userIdInApp);
     
 }

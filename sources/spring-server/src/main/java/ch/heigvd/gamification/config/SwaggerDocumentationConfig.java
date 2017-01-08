@@ -10,6 +10,10 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
+/**
+ *
+ * @author Antony
+ */
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-11-29T09:54:16.483Z")
 
 @Configuration
@@ -27,6 +31,10 @@ public class SwaggerDocumentationConfig {
             .build();
     }
 
+    /**
+     *
+     * @return
+     */
     @Bean
     public Docket customImplementation(){
         return new Docket(DocumentationType.SWAGGER_2)

@@ -2,7 +2,6 @@ package ch.heigvd.gamification.api;
 
 import ch.heigvd.gamification.api.dao.GamifiedApplicationRepositoryJPA;
 import ch.heigvd.gamification.api.dto.NewGameEvent;
-import ch.heigvd.gamification.model.GameEvent;
 import ch.heigvd.gamification.model.GamifiedApplication;
 import ch.heigvd.gamification.services.EventProcessor;
 import ch.heigvd.gamification.utils.ModelClassConverter;
@@ -25,6 +24,12 @@ public class EventsApiController implements EventsApi{
     @Autowired
     private EventProcessor eventProcessor;
     
+    /**
+     *
+     * @param authToken
+     * @param newGameEvent
+     * @return
+     */
     @Override
     public ResponseEntity eventsPost(@RequestHeader String authToken, @RequestBody NewGameEvent newGameEvent) {
 

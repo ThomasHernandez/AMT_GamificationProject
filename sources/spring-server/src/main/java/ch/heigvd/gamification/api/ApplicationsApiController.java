@@ -19,12 +19,18 @@ public class ApplicationsApiController implements ApplicationsApi{
 
     private final GamifiedApplicationRepositoryJPA applicationsRepository;
 
+    /**
+     *
+     * @param applicationsRepository
+     */
     public ApplicationsApiController(GamifiedApplicationRepositoryJPA applicationsRepository) {
         this.applicationsRepository = applicationsRepository;
     }
     
-    
-    
+    /**
+     *
+     * @return
+     */
     @Override
     public ResponseEntity<List<GamifiedApplicationToClient>> applicationsGet() {
         
@@ -39,6 +45,11 @@ public class ApplicationsApiController implements ApplicationsApi{
         return ResponseEntity.ok().body(resultToClient);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public ResponseEntity<Void> applicationsIdDelete(@PathVariable Long id) {
         
@@ -52,6 +63,11 @@ public class ApplicationsApiController implements ApplicationsApi{
 
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public ResponseEntity<GamifiedApplicationToClient> applicationsIdGet(@PathVariable Long id) {
         

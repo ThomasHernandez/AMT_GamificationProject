@@ -5,10 +5,23 @@ import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ *
+ * @author Antony
+ */
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-11-29T09:54:16.483Z")
 
 public class ApiOriginFilter implements javax.servlet.Filter {
-	@Override
+
+    /**
+     *
+     * @param request
+     * @param response
+     * @param chain
+     * @throws IOException
+     * @throws ServletException
+     */
+    @Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletResponse res = (HttpServletResponse) response;
@@ -18,11 +31,19 @@ public class ApiOriginFilter implements javax.servlet.Filter {
 		chain.doFilter(request, response);
 	}
 
-	@Override
+    /**
+     *
+     */
+    @Override
 	public void destroy() {
 	}
 
-	@Override
+    /**
+     *
+     * @param filterConfig
+     * @throws ServletException
+     */
+    @Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 	}
 }

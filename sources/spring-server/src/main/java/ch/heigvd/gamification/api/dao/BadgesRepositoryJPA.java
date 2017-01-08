@@ -9,6 +9,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface BadgesRepositoryJPA extends JpaRepository<Badge, Long>{
 
+    /**
+     *
+     * @param badgeName
+     * @return
+     */
     public Badge findByName(String badgeName);
     
 }

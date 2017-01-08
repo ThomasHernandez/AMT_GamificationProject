@@ -19,6 +19,11 @@ public class AuthApiController implements AuthApi{
     @Autowired
     private GamifiedApplicationRepositoryJPA applicationsRepository; 
     
+    /**
+     *
+     * @param credentials
+     * @return
+     */
     @Override
     public ResponseEntity<String> authPost(@RequestBody AppCredentials credentials) {
         
