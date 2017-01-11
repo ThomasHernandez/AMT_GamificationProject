@@ -32,10 +32,12 @@ public class Rule {
     @ManyToOne
     private PointScale pointScaleToCheck;
     
+    private double pointsToAdd;
+    
     @ManyToOne
     private Badge badgeToAward;
     
-    double valueToReach;
+    private double valueToReach;
 
     /**
      *
@@ -163,6 +165,22 @@ public class Rule {
      */
     public void setValueToReach(double valueToReach) {
         this.valueToReach = valueToReach;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public double getPointsToAdd() {
+        return pointsToAdd;
+    }
+
+    /**
+     *
+     * @param pointsToAdd
+     */
+    public void setPointsToAdd(double pointsToAdd) {
+        this.pointsToAdd = pointsToAdd;
     }
     
     

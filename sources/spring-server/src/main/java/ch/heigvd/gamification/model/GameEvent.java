@@ -14,42 +14,7 @@ public class GameEvent   {
     private String appUserId;
 
     private String eventType;
-
-    private String pointScaleToUpdateName;
     
-    private double newPoints;
-
-    /**
-     *
-     * @return
-     */
-    public String getPointScaleToUpdate() {
-        return pointScaleToUpdateName;
-    }
-
-    /**
-     *
-     * @param pointScaleToUpdateName
-     */
-    public void setPointScaleToUpdate(String pointScaleToUpdateName) {
-        this.pointScaleToUpdateName = pointScaleToUpdateName;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public double getNewPoints() {
-        return newPoints;
-    }
-
-    /**
-     *
-     * @param newPoints
-     */
-    public void setNewPoints(double newPoints) {
-        this.newPoints = newPoints;
-    }
 
     /**
      *

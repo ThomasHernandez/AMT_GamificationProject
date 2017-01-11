@@ -1,6 +1,7 @@
 package ch.heigvd.gamification.model;
 
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,10 +26,10 @@ public class ApplicationUser {
     private String idInGamifiedApplication;
     
     @OneToMany
-    private List<Badge> awardedBadges;
+    private Map<String,Badge> awardedBadges;
     
     @OneToMany
-    private List<PointScale> currentPoints;
+    private Map<String,PointScale> currentPoints;
     
     private int nbEvents;
 
@@ -52,7 +53,7 @@ public class ApplicationUser {
      *
      * @return
      */
-    public List<Badge> getAwardedBadges() {
+    public Map<String,Badge> getAwardedBadges() {
         return awardedBadges;
     }
 
@@ -60,7 +61,7 @@ public class ApplicationUser {
      *
      * @param awardedBadges
      */
-    public void setAwardedBadges(List<Badge> awardedBadges) {
+    public void setAwardedBadges(Map<String,Badge> awardedBadges) {
         this.awardedBadges = awardedBadges;
     }
 
@@ -68,7 +69,7 @@ public class ApplicationUser {
      *
      * @return
      */
-    public List<PointScale> getCurrentPoints() {
+    public Map<String,PointScale> getCurrentPoints() {
         return currentPoints;
     }
 
@@ -76,7 +77,7 @@ public class ApplicationUser {
      *
      * @param currentPoints
      */
-    public void setCurrentPoints(List<PointScale> currentPoints) {
+    public void setCurrentPoints(Map<String,PointScale> currentPoints) {
         this.currentPoints = currentPoints;
     }
 

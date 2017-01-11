@@ -35,6 +35,11 @@ public class GamifiedApplication {
     
     @OneToMany
     private List<PointScale> applicationPointScales;
+    
+    @OneToMany
+    private List<ApplicationUser> applicationUsers;
+
+    
 
     /**
      *
@@ -148,5 +153,20 @@ public class GamifiedApplication {
         this.applicationPointScales = applicationPointScales;
     }
     
+    /**
+     *
+     * @return
+     */
+    public List<ApplicationUser> getApplicationUsers() {
+        return applicationUsers;
+    }
 
+    /**
+     *
+     * @param applicationUsers
+     */
+    public void setApplicationUsers(List<ApplicationUser> applicationUsers) {
+        this.applicationUsers = applicationUsers;
+    }
+    
 }

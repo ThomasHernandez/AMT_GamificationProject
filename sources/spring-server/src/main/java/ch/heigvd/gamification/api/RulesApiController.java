@@ -46,28 +46,39 @@ public class RulesApiController implements RulesApi{
         GamifiedApplication targetApp = applicationsRepository.findByAuthToken(authToken);
         
         if(targetApp != null){
-            Badge targetBadge = badgesRepository.findByName(newRule.getBadgeName());
-            PointScale targetPointScale = pointScalesRepository.findByName(newRule.getPointScaleName());
             
-            if(targetBadge != null && targetPointScale != null){
                 
-                Rule ruleToSave = ModelClassConverter.newRuleToRule(newRule);
+            Rule ruleToSave = newRuleToRule(newRule);
+
+            rulesRepository.save(ruleToSave);
+            targetApp.getApplicationRules().add(ruleToSave);
+            applicationsRepository.save(targetApp);
+
+            return ResponseEntity.created(URI.create("")).build();
                 
-                ruleToSave.setApplication(targetApp);
-                ruleToSave.setPointScaleToCheck(targetPointScale);
-                ruleToSave.setBadgeToAward(targetBadge);
-                
-                rulesRepository.save(ruleToSave);
-                targetApp.getApplicationRules().add(ruleToSave);
-                applicationsRepository.save(targetApp);
-                
-                return ResponseEntity.created(URI.create("")).build();
-                
-            }
+            
         }
         
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
         
+    }
+    
+    private Rule newRuleToRule(NewRule newRule) {
+
+        Rule rule = new Rule();
+
+        rule.setName(newRule.getName());
+        rule.setDescription(newRule.getDescription());
+        rule.setEventType(newRule.getEventType());
+        rule.setPointScaleToCheck(pointScalesRepository.findByName(newRule.getPointScaleName()));
+        rule.setPointsToAdd(newRule.getPointsToAdd());
+        if(!newRule.getBadgeName().isEmpty()){
+            rule.setBadgeToAward(badgesRepository.findByName(newRule.getBadgeName()));
+        }
+        rule.setValueToReach(newRule.getValueToReach());
+
+        return rule;
+
     }
     
     

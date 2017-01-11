@@ -7,6 +7,8 @@ import ch.heigvd.gamification.utils.ModelClassConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -26,7 +28,7 @@ public class UsersApiController implements UsersApi{
      * @return
      */
     @Override
-    public ResponseEntity<ApplicationUserToClient> usersIdInApplicationGet(String authToken, String idInApplication) {
+    public ResponseEntity<ApplicationUserToClient> usersIdInApplicationGet(@RequestHeader String authToken, @PathVariable String idInApplication) {
         
         
         

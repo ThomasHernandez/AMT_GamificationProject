@@ -6,6 +6,7 @@
 package ch.heigvd.gamification.api.dao;
 
 import ch.heigvd.gamification.model.ApplicationUser;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -29,5 +30,7 @@ public interface ApplicationUserRepositoryJPA extends JpaRepository<ApplicationU
      * @return
      */
     public ApplicationUser findByApplicationAuthTokenAndIdInGamifiedApplication(String authToken, String userIdInApp);
+    
+    public List<ApplicationUser> findByApplicationAuthTokenAndCurrentPointsNameOrderByCurrentPointsCurrentValueDesc(String authString, String pointScaleName);
     
 }
