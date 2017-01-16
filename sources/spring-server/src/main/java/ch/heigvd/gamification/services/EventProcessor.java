@@ -1,8 +1,12 @@
 package ch.heigvd.gamification.services;
 
 import ch.heigvd.gamification.api.dao.ApplicationUserRepositoryJPA;
+import ch.heigvd.gamification.api.dao.BadgeAwardRepositoryJPA;
+import ch.heigvd.gamification.api.dao.CurrentPointsRepositoryJPA;
 import ch.heigvd.gamification.api.dao.GamifiedApplicationRepositoryJPA;
 import ch.heigvd.gamification.model.ApplicationUser;
+import ch.heigvd.gamification.model.BadgeAward;
+import ch.heigvd.gamification.model.CurrentPoints;
 import ch.heigvd.gamification.model.GameEvent;
 import ch.heigvd.gamification.model.GamifiedApplication;
 import ch.heigvd.gamification.model.PointScale;
@@ -25,6 +29,10 @@ public class EventProcessor {
     private  ApplicationUserRepositoryJPA usersRepository;
     @Autowired
     private GamifiedApplicationRepositoryJPA applicationsRepository;
+    @Autowired
+    private CurrentPointsRepositoryJPA pointsRepository;
+    @Autowired
+    private BadgeAwardRepositoryJPA awardedBadgesRepository;
     
         
     /**
@@ -46,16 +54,23 @@ public class EventProcessor {
             targetUser.setIdInGamifiedApplication(e.getAppUserId());
             targetUser.setNbEvents(0);
             
-            Map<String, PointScale> newUserPoints = new HashMap<>();
+            // Setting current values for each pointscale in application
+            Map<String, CurrentPoints> newUserPoints = new HashMap<>();
             
             for(PointScale p : app.getApplicationPointScales()){
                 
-                p.setCurrentValue(0.0);
-                newUserPoints.put(p.getName(), p);
+                CurrentPoints tmp = new CurrentPoints();
+                tmp.setTargetPointScale(p);
+                tmp.setCurrentValue(0.0);
+                
+                newUserPoints.put(p.getName(), tmp);
+                pointsRepository.save(tmp);
                 
             }
 
-            targetUser.setCurrentPoints(newUserPoints);
+            targetUser.setCurrentPointsList(newUserPoints);
+            
+            // Setting empty badges map fo new user
             targetUser.setAwardedBadges(new HashMap<>());
             
             app.getApplicationUsers().add(targetUser);
@@ -80,13 +95,15 @@ public class EventProcessor {
                     if(!targetUser.getAwardedBadges().containsKey(r.getBadgeToAward().getName())){
                         
                         //Checking if pointscale exists
-                        if(targetUser.getCurrentPoints().containsKey(r.getPointScaleToCheck().getName())){
+                        if(targetUser.getCurrentPointsList().containsKey(r.getPointScaleToCheck().getName())){
                             
                             //Checking if awarding condition is met and awarding badge to user
-                            if(targetUser.getCurrentPoints().get(r.getPointScaleToCheck().getName())
-                                    .getCurrentValue() >= r.getValueToReach()){
+                            if(targetUser.getCurrentPointsList().get(r.getPointScaleToCheck().getName()).getCurrentValue()>= r.getValueToReach()){
                                 
-                                targetUser.getAwardedBadges().put(r.getBadgeToAward().getName(), r.getBadgeToAward());
+                                BadgeAward newBadgeAward = new BadgeAward();
+                                newBadgeAward.setTargetBadge(r.getBadgeToAward());
+                                targetUser.getAwardedBadges().put(r.getBadgeToAward().getName(), newBadgeAward);
+                                awardedBadgesRepository.save(newBadgeAward);
                                 
                             }                           
                         }
@@ -98,16 +115,14 @@ public class EventProcessor {
                 else{
                     
                     //Checking if pointscale exists
-                    if(targetUser.getCurrentPoints().containsKey(r.getPointScaleToCheck().getName())){
-
-                       
-                        PointScale psToUpdate = targetUser.getCurrentPoints().get(r.getPointScaleToCheck().getName());
+                    if(targetUser.getCurrentPointsList().containsKey(r.getPointScaleToCheck().getName())){
                         
                         // Adding points to the pointscale, points value can be negative to remove points
-                        psToUpdate.setCurrentValue(psToUpdate.getCurrentValue() + r.getPointsToAdd());
                         
-                        // Replace the old pointscale with the one with updated value
-                        targetUser.getCurrentPoints().replace(psToUpdate.getName(), psToUpdate);                     
+                        CurrentPoints oldPoints = targetUser.getCurrentPointsList().get(r.getPointScaleToCheck().getName());
+                        oldPoints.setCurrentValue(oldPoints.getCurrentValue() + r.getPointsToAdd());
+                        targetUser.getCurrentPointsList().replace(r.getPointScaleToCheck().getName(), oldPoints);
+                        pointsRepository.save(oldPoints);
                                    
                     }
                         

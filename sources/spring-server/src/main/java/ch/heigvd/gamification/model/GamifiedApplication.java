@@ -5,6 +5,7 @@
  */
 package ch.heigvd.gamification.model;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ import javax.persistence.OneToMany;
  * @author Antony
  */
 @Entity
-public class GamifiedApplication {
+public class GamifiedApplication implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

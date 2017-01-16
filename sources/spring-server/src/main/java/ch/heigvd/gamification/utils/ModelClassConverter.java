@@ -2,6 +2,7 @@ package ch.heigvd.gamification.utils;
 
 import ch.heigvd.gamification.api.dto.ApplicationUserToClient;
 import ch.heigvd.gamification.api.dto.BadgeToClient;
+import ch.heigvd.gamification.api.dto.CurrentPointsToClient;
 import ch.heigvd.gamification.api.dto.GamifiedApplicationToClient;
 import ch.heigvd.gamification.api.dto.NewBadge;
 import ch.heigvd.gamification.api.dto.NewGameEvent;
@@ -11,6 +12,8 @@ import ch.heigvd.gamification.api.dto.PointScaleToClient;
 import ch.heigvd.gamification.api.dto.RuleToClient;
 import ch.heigvd.gamification.model.ApplicationUser;
 import ch.heigvd.gamification.model.Badge;
+import ch.heigvd.gamification.model.BadgeAward;
+import ch.heigvd.gamification.model.CurrentPoints;
 import ch.heigvd.gamification.model.GameEvent;
 import ch.heigvd.gamification.model.GamifiedApplication;
 import ch.heigvd.gamification.model.PointScale;
@@ -105,7 +108,7 @@ public class ModelClassConverter {
      * @param badges
      * @return
      */
-    public static List<BadgeToClient> badgeMapToBadgeToClientList(Map<String,Badge> badges) {
+    public static List<BadgeToClient> badgeMapToBadgeToClientList(Map<String,BadgeAward> badges) {
 
         List<BadgeToClient> badgesToClient = new LinkedList<>();
 
@@ -114,9 +117,9 @@ public class ModelClassConverter {
             badges.forEach((k,b) -> {
 
                 BadgeToClient tmp = new BadgeToClient().id(b.getId())
-                        .name(b.getName())
-                        .description(b.getDescription())
-                        .imageURI(b.getImageURI());
+                        .name(b.getTargetBadge().getName())
+                        .description(b.getTargetBadge().getDescription())
+                        .imageURI(b.getTargetBadge().getImageURI());
 
                 badgesToClient.add(tmp);
                 
@@ -182,11 +185,7 @@ public class ModelClassConverter {
         return new PointScaleToClient().id(pointScale.getId())
                 .name(pointScale.getName())
                 .description(pointScale.getDescription())
-                .lowerBound(pointScale.getLowerBound())
-                .upperBound(pointScale.getUpperBound())
-                .isIntegerScale(pointScale.getIsIntegerScale())
-                .unit(pointScale.getUnit())
-                .currentValue(pointScale.getCurrentValue());
+                .unit(pointScale.getUnit());
 
     }
 
@@ -206,10 +205,6 @@ public class ModelClassConverter {
                 PointScaleToClient tmp = new PointScaleToClient().id(p.getId())
                         .name(p.getName())
                         .description(p.getDescription())
-                        .isIntegerScale(p.getIsIntegerScale())
-                        .currentValue(p.getCurrentValue())
-                        .lowerBound(p.getLowerBound())
-                        .upperBound(p.getUpperBound())
                         .unit(p.getUnit());
 
                 pointScalesToClient.add(tmp);
@@ -222,32 +217,26 @@ public class ModelClassConverter {
     
     /**
      *
-     * @param pointScales
+     * @param currentPoints
      * @return
      */
-    public static List<PointScaleToClient> pointScaleMapToPointScaleToClientList(Map<String,PointScale> pointScales) {
+    public static List<CurrentPointsToClient> currentPointsMapToCurrentPointsList(Map<String,CurrentPoints> currentPoints) {
 
-        List<PointScaleToClient> pointScalesToClient = new LinkedList<>();
+        List<CurrentPointsToClient> currentPointsToClient = new LinkedList<>();
 
-        if (pointScales != null) {
+        if (currentPoints != null) {
 
-            pointScales.forEach((k,p) -> {
+            currentPoints.forEach((k,cp) -> {
                 
-                        PointScaleToClient tmp = new PointScaleToClient().id(p.getId())
-                        .name(p.getName())
-                        .description(p.getDescription())
-                        .isIntegerScale(p.getIsIntegerScale())
-                        .currentValue(p.getCurrentValue())
-                        .lowerBound(p.getLowerBound())
-                        .upperBound(p.getUpperBound())
-                        .unit(p.getUnit());
+                        CurrentPointsToClient tmp = 
+                                new CurrentPointsToClient().pointScaleName(k).currentValue(cp.getCurrentValue());
 
-                        pointScalesToClient.add(tmp);
+                        currentPointsToClient.add(tmp);
             });
             
         }
 
-        return pointScalesToClient;
+        return currentPointsToClient;
 
     }
 
@@ -261,11 +250,7 @@ public class ModelClassConverter {
         PointScale newP = new PointScale();
         newP.setName(newPointScale.getName());
         newP.setDescription(newPointScale.getDescription());
-        newP.setLowerBound(newPointScale.getLowerBound());
-        newP.setUpperBound(newPointScale.getUpperBound());
-        newP.setIsIntegerScale(newPointScale.getIsIntegerScale());
         newP.setUnit(newPointScale.getUnit());
-        newP.setCurrentValue(0.0);
 
         return newP;
 
@@ -300,7 +285,7 @@ public class ModelClassConverter {
 
         appUserToClient.setApplicationName(appUser.getApplication().getName());
         appUserToClient.setAwardedBadges(badgeMapToBadgeToClientList(appUser.getAwardedBadges()));
-        appUserToClient.setCurrentPoints(pointScaleMapToPointScaleToClientList(appUser.getCurrentPoints()));
+        appUserToClient.setCurrentPoints(currentPointsMapToCurrentPointsList(appUser.getCurrentPointsList()));
         appUserToClient.setId(appUser.getId());
         appUserToClient.setIdInApplication(appUser.getIdInGamifiedApplication());
         appUserToClient.setNbEvents(appUser.getNbEvents());
@@ -321,7 +306,7 @@ public class ModelClassConverter {
 
                 appUserToClient.setApplicationName(appUser.getApplication().getName());
                 appUserToClient.setAwardedBadges(badgeMapToBadgeToClientList(appUser.getAwardedBadges()));
-                appUserToClient.setCurrentPoints(pointScaleMapToPointScaleToClientList(appUser.getCurrentPoints()));
+                appUserToClient.setCurrentPoints(currentPointsMapToCurrentPointsList(appUser.getCurrentPointsList()));
                 appUserToClient.setId(appUser.getId());
                 appUserToClient.setIdInApplication(appUser.getIdInGamifiedApplication());
                 appUserToClient.setNbEvents(appUser.getNbEvents());

@@ -14,3 +14,7 @@ services:
      - "6060:80"
     links:
      - mysql:db
+  springserver:
+    build: ../images/springserver
+    ports:
+     - "8080:8080"

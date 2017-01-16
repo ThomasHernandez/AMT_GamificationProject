@@ -381,9 +381,6 @@ definitions:
       - id
       - name
       - description
-      - lowerBound
-      - upperBound
-      - isIntegerScale
       - unit
     properties:
       id:
@@ -393,41 +390,20 @@ definitions:
         type: string
       description:
         type: string
-      lowerBound:
-        type: number
-        format: double
-      upperBound:
-        type: number
-        format: double
-      isIntegerScale:
-        type: boolean
       unit:
         type: string
-      currentValue:
-          type: number
-          format: double
+
   newPointScale:
     type: object
     required:
       - name
       - description
-      - lowerBound
-      - upperBound
-      - isIntegerScale
       - unit
     properties:
       name:
         type: string
       description:
         type: string
-      lowerBound:
-        type: number
-        format: double
-      upperBound:
-        type: number
-        format: double
-      isIntegerScale:
-        type: boolean
       unit:
         type: string
   
@@ -514,7 +490,7 @@ definitions:
       currentPoints:
         type: array
         items: 
-          $ref: '#/definitions/pointScaleToClient'
+          $ref: '#/definitions/currentPointsToClient'
       nbEvents:
         type: integer
         format: int32
@@ -573,5 +549,18 @@ definitions:
       badgeName:
         type: string
       valueToReach:
+        type: number
+        format: double
+        
+  
+  currentPointsToClient:
+    type: object
+    required:
+      - pointScaleName
+      - currentValue
+    properties:
+      pointScaleName:
+        type: string
+      currentValue:
         type: number
         format: double

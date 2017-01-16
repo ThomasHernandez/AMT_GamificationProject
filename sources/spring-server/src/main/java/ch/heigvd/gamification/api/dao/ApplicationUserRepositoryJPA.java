@@ -31,6 +31,6 @@ public interface ApplicationUserRepositoryJPA extends JpaRepository<ApplicationU
      */
     public ApplicationUser findByApplicationAuthTokenAndIdInGamifiedApplication(String authToken, String userIdInApp);
     
-    public List<ApplicationUser> findByApplicationAuthTokenAndCurrentPointsNameOrderByCurrentPointsCurrentValueDesc(String authString, String pointScaleName);
+    //public List<ApplicationUser> findByApplicationAuthTokenAndCurrentPointsNameOrderByCurrentPointsCurrentValueDesc(String authString, String pointScaleName);
     
 }

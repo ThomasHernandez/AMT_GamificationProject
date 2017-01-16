@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Antony
  */
-@RestController
+//@RestController
 public class LeaderBoardApiController implements LeaderboardApi{
 
     @Autowired
@@ -36,8 +36,8 @@ public class LeaderBoardApiController implements LeaderboardApi{
         GamifiedApplication targetApp = applicationsRepository.findByAuthToken(authToken);
         if(targetApp != null){
 
-            return ResponseEntity.ok(ModelClassConverter.applicationUserListToApplicationUserToClientList
-                                        (usersRepository.findByApplicationAuthTokenAndCurrentPointsNameOrderByCurrentPointsCurrentValueDesc(authToken, pointScaleName)));
+//            return ResponseEntity.ok(ModelClassConverter.applicationUserListToApplicationUserToClientList
+//                                        (usersRepository.findByApplicationAuthTokenAndCurrentPointsNameOrderByCurrentPointsCurrentValueDesc(authToken, pointScaleName)));
                 
             
         }

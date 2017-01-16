@@ -1,5 +1,6 @@
 package ch.heigvd.gamification.model;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -8,7 +9,7 @@ import javax.persistence.Id;
  * @author Antony
  */
 @Entity
-public class GameEvent   {
+public class GameEvent  implements Serializable{
     
     @Id
     private String appUserId;

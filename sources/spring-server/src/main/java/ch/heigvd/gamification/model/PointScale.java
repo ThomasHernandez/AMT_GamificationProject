@@ -1,5 +1,6 @@
 package ch.heigvd.gamification.model;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +11,7 @@ import javax.persistence.Id;
  * @author Antony
  */
 @Entity
-public class PointScale {
+public class PointScale implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,23 +21,9 @@ public class PointScale {
 
     private String description;
 
-    private Double lowerBound;
-
-    private Double upperBound;
-
-    private Boolean isIntegerScale;
-
     private String unit;
-    
-    private Double currentValue;
 
-    /**
-     *
-     * @param currentValue
-     */
-    public void setCurrentValue(Double currentValue) {
-        this.currentValue = currentValue;
-    }
+    
 
     /**
      *
@@ -86,53 +73,6 @@ public class PointScale {
         this.description = description;
     }
 
-    /**
-     *
-     * @return
-     */
-    public Double getLowerBound() {
-        return lowerBound;
-    }
-
-    /**
-     *
-     * @param lowerBound
-     */
-    public void setLowerBound(Double lowerBound) {
-        this.lowerBound = lowerBound;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Double getUpperBound() {
-        return upperBound;
-    }
-
-    /**
-     *
-     * @param upperBound
-     */
-    public void setUpperBound(Double upperBound) {
-        this.upperBound = upperBound;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Boolean getIsIntegerScale() {
-        return isIntegerScale;
-    }
-
-    /**
-     *
-     * @param isIntegerScale
-     */
-    public void setIsIntegerScale(Boolean isIntegerScale) {
-        this.isIntegerScale = isIntegerScale;
-    }
 
     /**
      *
@@ -150,12 +90,5 @@ public class PointScale {
         this.unit = unit;
     }
     
-    /**
-     *
-     * @return
-     */
-    public Double getCurrentValue() {
-        return currentValue;
-    }
     
 }
