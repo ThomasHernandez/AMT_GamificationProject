@@ -18,7 +18,7 @@ The API documentation can be found at the following address:
 
 The demo application is based on a previous project developed in the course STI. It is a simple web messenger where users can send each other messages. It is written in HTML, PHP, SQLite.
 
-It has been modified to send events whenever a message is sent. The user receives a point for each message sent. After 3 messages send it receives a badge with a nice email logo as an award, yay!
+It has been modified to send events whenever a message is sent. The user receives a point for each message sent. After 3 messages sent it receives a badge with a nice email logo as an award, yay!
 
 User stats can be viewed in a simple profile page.
 
@@ -62,13 +62,13 @@ The topology relies on a remote MySQL server. For simplicity the source code is 
 
 **N.B: The IP adress may vary depending on your docker machine configuration. For the demo application to work it is also required to change the variable $serverAdress in the files initamt.php, addmessage.php, profil.php int the *demoapplication* directory. This is due to the fact that docker-compose *links* didn't work properly with our PHP scripts**
 
-## Basic steps to configuring the platform for an application
+## Basic steps to configure the platform for an application
 
 - Register your application via the /registrations endpoint
-- Get the authentication token needed to used to authenticate the application and use the other endpoints with /auth
+- Get the authentication token needed used to authenticate the application and use the other endpoints with /auth
 - Post a badge on /badges
 - Post a pointscale on /pointscales
-- Post a rule for to add points and a rule to award a badge based on the two previous steps. 
+- Post a rule to add points and a rule to award a badge based on the two previous steps. 
 
 **Bear in mind that the badge name and the pointscale name have to match what you posted previously. Also if you want to make a rule to add points (use pointsToAdd to define the number of points given) YOU HAVE TO let the field for the badge name empty (empty string) otherwise it is considedered as a badge awarding rule (here valueToReach is used).**
 
@@ -92,7 +92,8 @@ Every endpoint of our API has been tested independently through the following fe
 
 - **/application**, **/registrations** (`01_applicationEndpoint.feature`, `ApplicationSteps.java`)  
 - **/auth** (`02_authenticationEndpoint.feature`, `AuthenticationSteps.java`)  
-- **/badges** (`03_badgesEndpoint.feature`, `BadgesSteps.java`)  
+- **/badges** (`0
+- 3_badgesEndpoint.feature`, `BadgesSteps.java`)  
 - **/pointscales** (`04_pointscalesEndpoint.feature`, `PointscalesSteps.java`)  
 - **/rules** (`05_rulesEndpoint.feature`, `RulesSteps.java`)  
 - **/events** (`06_eventsEndpoint.feature`, `EventsSteps.java`)  
