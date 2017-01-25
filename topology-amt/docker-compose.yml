@@ -20,9 +20,3 @@ services:
      - "8080:8080"
     links:
      - mysql:db
-  demoapplication:
-    build: ../images/demoapplication
-    ports:
-     - "80:80"
-    links:
-     - springserver:springserver

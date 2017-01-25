@@ -20,9 +20,20 @@ The demo application is based on a previous project developed in the course STI.
 
 It has been modified to send events whenever a message is sent. The user receives a point for each message sent. After 3 messages send it receives a badge with a nice email logo as an award, yay!
 
-User stats can be vieved in a simple profile page.
+User stats can be viewed in a simple profile page.
 
-You can try it by using the given docker topology (see below) or by installing the demo application in a WampServer (just copy the content of the www directory into WampServer www directory) and by running the gamification platform in localhost (see Tests section)
+![](pictures/demoapp.png)
+
+You can try it by installing the demo application in a WampServer (just copy the content of the www directory into WampServer www directory) and by running the gamification platform in localhost (see Tests section)
+
+The steps of the demo are the following:
+
+- Go to [http://localhost/inidatabase.php](http://localhost/initdatabase.php) to setup the application database
+- Go to [http://localhost/initamt.php](http://localhost/initamt.php) to setup the everything needed in the gamification platform
+- Go to [http://localhost/index.php](http://localhost/index.php) and login with **Username** : alice@sti.ch **Password**: 1234
+- Go to "Envoi" [http://localhost/writemessage.php](http://localhost/writemessage.php) and send 3 messages 
+- Finally go to "Profil" [http://localhost/profil.php](http://localhost/profil.php). There should be a pointscale with 3 points and a badge received with an email logo.
+
 
 
 ## Deployment Instructions for Docker
@@ -47,16 +58,6 @@ To access the main application go to:
 [http://192.168.99.100:8080/api/swagger-ui.html](http://192.168.99.100:8080/api/swagger-ui.html) , it will display the swagger-ui GUI which allows to send requests on the API
 
 
-The access the demo application go to:
-[http://192.168.99.100](http://192.168.99.100)
-The steps of the demo are the following:
-
-- Go to [http://192.168.99.100/inidatabase.php](http://192.168.99.100/initdatabase.php) to setup the application database
-- Go to [http://192.168.99.100/initamt.php](http://192.168.99.100/initamt.php) to setup the everything needed in the gamification platform
-- Go to [http://192.168.99.100/index.php](http://192.168.99.100/index.php) and login with Username : alice@sti.ch Password: 1234
-- Go to "Envoi" [http://192.168.99.100/writemessage.php](http://192.168.99.100/writemessage.php) and send 3 messages 
-- Finally go to "Profil" [http://192.168.99.100/profil.php](http://192.168.99.100/profil.php). There should be a pointscale with 3 points and a badge received with an email logo.
-
 
 
 **N.B: The IP adress may vary depending on your docker machine configuration. For the demo application to work it is also required to change the variable $serverAdress in the files initamt.php, addmessage.php, profil.php int the *demoapplication* directory. This is due to the fact that docker-compose *links* didn't work properly with our PHP scripts**
@@ -74,6 +75,9 @@ The steps of the demo are the following:
 - Now you can starting sending events with the /events endpoint
 
 **Bear in mind that the eventType has to match the ones defined in the rules from previous step**
+
+**N.B:** Use the API documentation (see section Description) to know what to send in the requests.
+
 
 ## Tests
 
