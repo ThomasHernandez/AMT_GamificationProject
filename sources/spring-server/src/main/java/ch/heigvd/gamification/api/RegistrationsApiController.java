@@ -34,7 +34,6 @@ public class RegistrationsApiController implements RegistrationsApi{
         if(applicationsRepository.findByName(newA.getName()) == null){
             
              applicationsRepository.save(newA);
-             System.out.println("HASH STORED: " + newA.getPasswordHash());
              
              return ResponseEntity.created(URI.create("")).build();
 

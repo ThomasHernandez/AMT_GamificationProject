@@ -35,11 +35,8 @@ public class AuthApiController implements AuthApi{
         if(targetApp != null){
             
             String passwordHash = DigestUtils.md5DigestAsHex(appPassword.getBytes());
-            
-            System.out.println("HASH TESTED: " + passwordHash);
-            
+                        
             if(targetApp.getPasswordHash().equals(passwordHash)){
-                System.out.println("YO GOOD CREDENTIALS");
                 return ResponseEntity.ok().body(targetApp.getAuthToken());
             }            
         }

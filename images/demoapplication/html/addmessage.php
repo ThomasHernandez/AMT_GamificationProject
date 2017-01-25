@@ -14,6 +14,8 @@ if (!isset($_SESSION['id'])){
 <?php
 	
 
+	$serverAdress = "192.168.99.100";
+	
 	// Set default timezone
   	date_default_timezone_set('UTC');
 
@@ -54,11 +56,13 @@ if (!isset($_SESSION['id'])){
 			
 			$data = array('appName'=>'demo2','appPassword'=>'toor');
 			$data_json = json_encode($data);
-			$url = "http://gamificationserver:8080/api/auth";
+			$url = "http://".$serverAdress.":8080/api/auth";
 
 			//echo "/auth";
 			//echo "<br/>";
 			//echo "<br/>";
+			
+			
 
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);
@@ -81,7 +85,7 @@ if (!isset($_SESSION['id'])){
 			// Ajout event pour comptage envoi messages
 			$data = array('appUserId'=>$sender,'eventType'=>'plus1');
 			$data_json = json_encode($data);
-			$url = "http://gamificationserver:8080/api/events";
+			$url = "http://".$serverAdress.":8080/api/events";
 
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);
@@ -106,7 +110,7 @@ if (!isset($_SESSION['id'])){
 			// ajout event pour obtenir badge (le bade sera recu que quand la règle sera effectivement atteint)
 			$data = array('appUserId'=>$sender,'eventType'=>'winMail');
 			$data_json = json_encode($data);
-			$url = "http://gamificationserver:8080/api/events";
+			$url = "http://".$serverAdress.":8080/api/events";
 
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);

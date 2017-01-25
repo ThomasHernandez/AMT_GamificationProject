@@ -8,11 +8,13 @@ if (!isset($_SESSION['id'])){
 	exit;
 }
 
+$serverAdress = "192.168.99.100";
+
 //--- AUTH ---
 
 $data = array('appName'=>'demo2','appPassword'=>'toor');
 $data_json = json_encode($data);
-$url = "http://gamificationserver:8080/api";
+$url = "http://".$serverAdress.":8080/api";
 
 //echo "/auth";
 //echo "<br/>";

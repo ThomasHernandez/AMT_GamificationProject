@@ -75,7 +75,6 @@ public class EventProcessor {
             
             app.getApplicationUsers().add(targetUser);
             
-            System.out.println("USER REGISTERED");
         }
         
         // Processing event for user   
@@ -84,7 +83,6 @@ public class EventProcessor {
         // Comparing event to application rules
             
         for(Rule r : app.getApplicationRules()){
-            System.out.println("CHECKING RULE: " + r.getName());
             
             if(r.getEventType().equals(e.getEventType())){
                 

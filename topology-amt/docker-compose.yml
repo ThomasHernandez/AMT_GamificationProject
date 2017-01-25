@@ -25,4 +25,4 @@ services:
     ports:
      - "80:80"
     links:
-     - springserver:gamificationserver
+     - springserver:springserver

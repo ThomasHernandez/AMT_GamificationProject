@@ -1,9 +1,11 @@
 <?php
 //--- Registrations ---
 
+$serverAdress = "192.168.99.100";
+
 $data = array('name'=>'demo2','password'=>'toor');
 $data_json = json_encode($data);
-$url = "http://gamificationserver:8080/api/registrations";
+$url = "http://".$serverAdress.":8080/api/registrations";
 
 echo "/registrations";
 
@@ -31,7 +33,7 @@ var_dump($header);
 
 $data = array('appName'=>'demo2','appPassword'=>'toor');
 $data_json = json_encode($data);
-$url = "http://gamificationserver:8080/api/auth";
+$url = "http://".$serverAdress.":8080/api/auth";
 
 echo "/auth";
 echo "<br/>";
@@ -54,8 +56,6 @@ $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
 $header = substr($response, 0, $header_size);
 $token = substr($response, $header_size);
 
-echo $token
-
 
 curl_close($ch);
 //var_dump($responses);
@@ -67,7 +67,7 @@ var_dump($header);
 
 $data = array('description'=>'yolo!','imageURI'=>'http://www.needmail.net/mail.jpg','name'=>'mail');
 $data_json = json_encode($data);
-$url = "http://gamificationserver:8080/api/badges";
+$url = "http://".$serverAdress.":8080/api/badges";
 
 echo "/badges";
 
@@ -97,7 +97,7 @@ var_dump($body);
 
 $data = array('description'=>'echelle','name'=>'scale','unit'=>'point');
 $data_json = json_encode($data);
-$url = "http://gamificationserver:8080/api/pointscales";
+$url = "http://".$serverAdress.":8080/api/pointscales";
 
 echo "/pointscales";
 
@@ -127,7 +127,7 @@ var_dump($body);
 
 $data = array('badgeName'=>'','description'=>'1point','eventType'=>'plus1','name'=>'myRule','pointScaleName'=>'scale','pointsToAdd'=>1,'valueToReach'=>0);
 $data_json = json_encode($data);
-$url = "http://gamificationserver:8080/api/rules";
+$url = "http://".$serverAdress.":8080/api/rules";
 
 echo "/rules add point on PS";
 
@@ -157,7 +157,7 @@ var_dump($body);
 
 $data = array('badgeName'=>'mail','description'=>'giveBadge','eventType'=>'winMail','name'=>'myRule2','pointScaleName'=>'scale','pointsToAdd'=>0,'valueToReach'=>3);
 $data_json = json_encode($data);
-$url = "http://gamificationserver:8080/api/rules";
+$url = "http://".$serverAdress.":8080/api/rules";
 
 echo "/rules give badge when nb point reach";
 
