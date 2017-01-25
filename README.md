@@ -78,6 +78,9 @@ To access the main application go to:
 
 **N.B:** Use the API documentation (see section Description) to know what to send in the requests.
 
+## Model Classes UML
+
+![](pictures/uml.png)
 
 ## Tests
 
