@@ -1,0 +1,1125 @@
+<!doctype html>
+<html>
+  <head>
+    <title>AMT Gamification API</title>
+    <style type="text/css">
+      body {
+	font-family: Trebuchet MS, sans-serif;
+	font-size: 15px;
+	color: #444;
+	margin-right: 24px;
+}
+
+h1	{
+	font-size: 25px;
+}
+h2	{
+	font-size: 20px;
+}
+h3	{
+	font-size: 16px;
+	font-weight: bold;
+}
+hr	{
+	height: 1px;
+	border: 0;
+	color: #ddd;
+	background-color: #ddd;
+}
+
+.app-desc {
+  clear: both;
+  margin-left: 20px;
+}
+.param-name {
+  width: 100%;
+}
+.license-info {
+  margin-left: 20px;
+}
+
+.license-url {
+  margin-left: 20px;
+}
+
+.model {
+  margin: 0 0 0px 20px;
+}
+
+.method {
+  margin-left: 20px;
+}
+
+.method-notes	{
+	margin: 10px 0 20px 0;
+	font-size: 90%;
+	color: #555;
+}
+
+pre {
+  padding: 10px;
+  margin-bottom: 2px;
+}
+
+.http-method {
+ text-transform: uppercase;
+}
+
+pre.get {
+  background-color: #0f6ab4;
+}
+
+pre.post {
+  background-color: #10a54a;
+}
+
+pre.put {
+  background-color: #c5862b;
+}
+
+pre.delete {
+  background-color: #a41e22;
+}
+
+.huge	{
+	color: #fff;
+}
+
+pre.example {
+  background-color: #f3f3f3;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+code {
+  white-space: pre;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.method-path {
+  font-size: 1.5em;
+  background-color: #0f6ab4;
+}
+
+.up {
+  float:right;
+}
+
+.parameter {
+  width: 500px;
+}
+
+.param {
+  width: 500px;
+  padding: 10px 0 0 20px;
+  font-weight: bold;
+}
+
+.param-desc {
+  width: 700px;
+  padding: 0 0 0 20px;
+  color: #777;
+}
+
+.param-type {
+  font-style: italic;
+}
+
+.param-enum-header {
+width: 700px;
+padding: 0 0 0 60px;
+color: #777;
+font-weight: bold;
+}
+
+.param-enum {
+width: 700px;
+padding: 0 0 0 80px;
+color: #777;
+font-style: italic;
+}
+
+.field-label {
+  padding: 0;
+  margin: 0;
+  clear: both;
+}
+
+.field-items	{
+	padding: 0 0 15px 0;
+	margin-bottom: 15px;
+}
+
+.return-type {
+  clear: both;
+  padding-bottom: 10px;
+}
+
+.param-header {
+  font-weight: bold;
+}
+
+.method-tags {
+  text-align: right;
+}
+
+.method-tag {
+  background: none repeat scroll 0% 0% #24A600;
+  border-radius: 3px;
+  padding: 2px 10px;
+  margin: 2px;
+  color: #FFF;
+  display: inline-block;
+  text-decoration: none;
+}
+
+    </style>
+  </head>
+  <body>
+  <h1>AMT Gamification API</h1>
+    <div class="app-desc">An API for gamifying any web application suitable to gamification concepts</div>
+    <div class="app-desc">More information: <a href="https://github.com/antonyciani/AMT_GamificationProject">https://github.com/antonyciani/AMT_GamificationProject</a></div>
+    <div class="app-desc">Contact Info: <a href="antony.ciani@heig-vd.ch">antony.ciani@heig-vd.ch</a></div>
+    <div class="app-desc">Version: 1.0.0</div>
+    <div class="app-desc">BasePath:/api</div>
+    <div class="license-info">All rights reserved</div>
+    <div class="license-url">http://apache.org/licenses/LICENSE-2.0.html</div>
+  <h2>Access</h2>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Default">Default</a></h4>
+  <ul>
+  <li><a href="#applicationsGet"><code><span class="http-method">get</span> /applications</code></a></li>
+  <li><a href="#applicationsIdDelete"><code><span class="http-method">delete</span> /applications/{id}</code></a></li>
+  <li><a href="#applicationsIdGet"><code><span class="http-method">get</span> /applications/{id}</code></a></li>
+  <li><a href="#authPost"><code><span class="http-method">post</span> /auth</code></a></li>
+  <li><a href="#badgesGet"><code><span class="http-method">get</span> /badges</code></a></li>
+  <li><a href="#badgesIdDelete"><code><span class="http-method">delete</span> /badges/{id}</code></a></li>
+  <li><a href="#badgesIdGet"><code><span class="http-method">get</span> /badges/{id}</code></a></li>
+  <li><a href="#badgesPost"><code><span class="http-method">post</span> /badges</code></a></li>
+  <li><a href="#eventsPost"><code><span class="http-method">post</span> /events</code></a></li>
+  <li><a href="#pointscalesGet"><code><span class="http-method">get</span> /pointscales</code></a></li>
+  <li><a href="#pointscalesIdDelete"><code><span class="http-method">delete</span> /pointscales/{id}</code></a></li>
+  <li><a href="#pointscalesIdGet"><code><span class="http-method">get</span> /pointscales/{id}</code></a></li>
+  <li><a href="#pointscalesPost"><code><span class="http-method">post</span> /pointscales</code></a></li>
+  <li><a href="#registrationsPost"><code><span class="http-method">post</span> /registrations</code></a></li>
+  <li><a href="#rulesPost"><code><span class="http-method">post</span> /rules</code></a></li>
+  <li><a href="#usersIdInApplicationGet"><code><span class="http-method">get</span> /users/{idInApplication}</code></a></li>
+  </ul>
+
+  <h1><a name="Default">Default</a></h1>
+  <div class="method"><a name="applicationsGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /applications</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">applicationsGet</span>)</div>
+    <div class="method-notes">Returns all applications from the system that the user has access to</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#gamifiedApplicationToClient">gamifiedApplicationToClient</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "badges" : [ {
+    "imageURI" : "aeiou",
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 123456789
+  } ],
+  "authToken" : "aeiou",
+  "pointScales" : [ {
+    "unit" : "aeiou",
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 123456789
+  } ],
+  "name" : "aeiou",
+  "rules" : [ {
+    "pointScaleName" : "aeiou",
+    "badgeName" : "aeiou",
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "eventType" : "aeiou",
+    "valueToReach" : 1.3579000000000001069366817318950779736042022705078125,
+    "pointsToAdd" : 1.3579000000000001069366817318950779736042022705078125
+  } ]
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    applications response
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="applicationsIdDelete"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /applications/{id}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">applicationsIdDelete</span>)</div>
+    <div class="method-notes">deletes a single application based on the ID supplied</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of application to delete format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    application deleted
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="applicationsIdGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /applications/{id}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">applicationsIdGet</span>)</div>
+    <div class="method-notes">Returns the details of the application based on a single ID</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of gamified application to fetch format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#gamifiedApplicationToClient">gamifiedApplicationToClient</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "badges" : [ {
+    "imageURI" : "aeiou",
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 123456789
+  } ],
+  "authToken" : "aeiou",
+  "pointScales" : [ {
+    "unit" : "aeiou",
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 123456789
+  } ],
+  "name" : "aeiou",
+  "rules" : [ {
+    "pointScaleName" : "aeiou",
+    "badgeName" : "aeiou",
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "eventType" : "aeiou",
+    "valueToReach" : 1.3579000000000001069366817318950779736042022705078125,
+    "pointsToAdd" : 1.3579000000000001069366817318950779736042022705078125
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    application response
+        <a href="#gamifiedApplicationToClient">gamifiedApplicationToClient</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="authPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /auth</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">authPost</span>)</div>
+    <div class="method-notes">get authentication token from registered application</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">credentials <a href="#AppCredentials">AppCredentials</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; the target app credentials </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      String
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: </div>
+    <pre class="example"><code></code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>text/plain</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    good credentials, auth token
+        <a href="#String">String</a>
+    <h4 class="field-label">400</h4>
+    bad credentials
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="badgesGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /badges</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">badgesGet</span>)</div>
+    <div class="method-notes">Returns all badges from the system that the user has access to</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#badgeToClient">badgeToClient</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "imageURI" : "aeiou",
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "id" : 123456789
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    badges response
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="badgesIdDelete"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /badges/{id}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">badgesIdDelete</span>)</div>
+    <div class="method-notes">deletes a single badge based on the ID supplied</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of badge to delete format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    badge deleted
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="badgesIdGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /badges/{id}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">badgesIdGet</span>)</div>
+    <div class="method-notes">Returns a badge based on a single ID</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the badge to fetch format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#badgeToClient">badgeToClient</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "imageURI" : "aeiou",
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "id" : 123456789
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    badge response
+        <a href="#badgeToClient">badgeToClient</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="badgesPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /badges</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">badgesPost</span>)</div>
+    <div class="method-notes">Creates a new badge in the system.  Duplicates are allowed</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">newBadge <a href="#NewBadge">NewBadge</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Badge to add to the system </div>
+
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Request headers</h3>
+    <div class="field-items">
+      
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#badgeToClient">badgeToClient</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "imageURI" : "aeiou",
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "id" : 123456789
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    badge creation response
+        <a href="#badgeToClient">badgeToClient</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="eventsPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /events</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">eventsPost</span>)</div>
+    <div class="method-notes">Send events to the event processor</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">newGameEvent <a href="#NewGameEvent">NewGameEvent</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; game event to be processed by the system </div>
+
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Request headers</h3>
+    <div class="field-items">
+      
+    </div>  <!-- field-items -->
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">202</h4>
+    gameEvent accepted
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    gameEvent unprocessable
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="pointscalesGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /pointscales</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">pointscalesGet</span>)</div>
+    <div class="method-notes">Returns all pointscales from the system that the user has access to</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#pointScaleToClient">pointScaleToClient</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "unit" : "aeiou",
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "id" : 123456789
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    pointscales response
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="pointscalesIdDelete"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /pointscales/{id}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">pointscalesIdDelete</span>)</div>
+    <div class="method-notes">deletes a single pointScale based on the ID supplied</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of pointScale to delete format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    pointScale deleted
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="pointscalesIdGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /pointscales/{id}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">pointscalesIdGet</span>)</div>
+    <div class="method-notes">Returns the details of the pointscale based on a single ID</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of pointScale to fetch format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#pointScaleToClient">pointScaleToClient</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "unit" : "aeiou",
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "id" : 123456789
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    pointScale response
+        <a href="#pointScaleToClient">pointScaleToClient</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="pointscalesPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /pointscales</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">pointscalesPost</span>)</div>
+    <div class="method-notes">Creates a new pointScale in the system.  Duplicates are allowed</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">newPointScale <a href="#NewPointScale">NewPointScale</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; PointScale to add to the system </div>
+
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Request headers</h3>
+    <div class="field-items">
+      
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#pointScaleToClient">pointScaleToClient</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "unit" : "aeiou",
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "id" : 123456789
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    pointScale response
+        <a href="#pointScaleToClient">pointScaleToClient</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="registrationsPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /registrations</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">registrationsPost</span>)</div>
+    <div class="method-notes">Registers a new application in the system.  Duplicates are not allowed</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">newGamifiedApplication <a href="#NewGamifiedApplication">NewGamifiedApplication</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; PointScale to add to the system </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    new application created
+        <a href="#"></a>
+    <h4 class="field-label">409</h4>
+    application name already exists
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="rulesPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /rules</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">rulesPost</span>)</div>
+    <div class="method-notes">set a new rule for a given application and a given pointscale awarding a given badge</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">newRule <a href="#NewRule">NewRule</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; The new rule to set </div>
+
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Request headers</h3>
+    <div class="field-items">
+      
+    </div>  <!-- field-items -->
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    rule created
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    rule unprocessable
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersIdInApplicationGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{idInApplication}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">usersIdInApplicationGet</span>)</div>
+    <div class="method-notes">Retrieve one user by id</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">idInApplication (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the user to fetch </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Request headers</h3>
+    <div class="field-items">
+      
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#applicationUserToClient">applicationUserToClient</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "idInApplication" : "aeiou",
+  "awardedBadges" : [ {
+    "imageURI" : "aeiou",
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 123456789
+  } ],
+  "currentPoints" : [ {
+    "pointScaleName" : "aeiou",
+    "currentValue" : 1.3579000000000001069366817318950779736042022705078125
+  } ],
+  "id" : 123456789,
+  "nbEvents" : 123,
+  "applicationName" : "aeiou"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Returns the specified user state
+        <a href="#applicationUserToClient">applicationUserToClient</a>
+    <h4 class="field-label">404</h4>
+    User not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+
+  <div class="up"><a href="#__Models">Up</a></div>
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#appCredentials"><code>appCredentials</code></a></li>
+    <li><a href="#applicationUserToClient"><code>applicationUserToClient</code></a></li>
+    <li><a href="#badgeToClient"><code>badgeToClient</code></a></li>
+    <li><a href="#currentPointsToClient"><code>currentPointsToClient</code></a></li>
+    <li><a href="#gamifiedApplicationToClient"><code>gamifiedApplicationToClient</code></a></li>
+    <li><a href="#newBadge"><code>newBadge</code></a></li>
+    <li><a href="#newGameEvent"><code>newGameEvent</code></a></li>
+    <li><a href="#newGamifiedApplication"><code>newGamifiedApplication</code></a></li>
+    <li><a href="#newPointScale"><code>newPointScale</code></a></li>
+    <li><a href="#newRule"><code>newRule</code></a></li>
+    <li><a href="#pointScaleToClient"><code>pointScaleToClient</code></a></li>
+    <li><a href="#ruleToClient"><code>ruleToClient</code></a></li>
+  </ol>
+
+  <div class="model">
+    <h3 class="field-label"><a name="appCredentials">appCredentials - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">appName </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">appPassword </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="applicationUserToClient">applicationUserToClient - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+<div class="param">applicationName </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">idInApplication </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">awardedBadges </div><div class="param-desc"><span class="param-type"><a href="#badgeToClient">array[badgeToClient]</a></span>  </div>
+<div class="param">currentPoints </div><div class="param-desc"><span class="param-type"><a href="#currentPointsToClient">array[currentPointsToClient]</a></span>  </div>
+<div class="param">nbEvents </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="badgeToClient">badgeToClient - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">description </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">imageURI </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="currentPointsToClient">currentPointsToClient - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">pointScaleName </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">currentValue </div><div class="param-desc"><span class="param-type"><a href="#double">Double</a></span>  format: double</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="gamifiedApplicationToClient">gamifiedApplicationToClient - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">authToken </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">badges </div><div class="param-desc"><span class="param-type"><a href="#badgeToClient">array[badgeToClient]</a></span>  </div>
+<div class="param">pointScales </div><div class="param-desc"><span class="param-type"><a href="#pointScaleToClient">array[pointScaleToClient]</a></span>  </div>
+<div class="param">rules </div><div class="param-desc"><span class="param-type"><a href="#ruleToClient">array[ruleToClient]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="newBadge">newBadge - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">description </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">imageURI </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="newGameEvent">newGameEvent - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">appUserId </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">eventType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="newGamifiedApplication">newGamifiedApplication - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">password </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="newPointScale">newPointScale - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">description </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">unit </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="newRule">newRule - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">description </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">eventType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">pointScaleName </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">pointsToAdd </div><div class="param-desc"><span class="param-type"><a href="#double">Double</a></span>  format: double</div>
+<div class="param">badgeName </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">valueToReach </div><div class="param-desc"><span class="param-type"><a href="#double">Double</a></span>  format: double</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="pointScaleToClient">pointScaleToClient - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">description </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">unit </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="ruleToClient">ruleToClient - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">description </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">eventType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">pointScaleName </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">pointsToAdd </div><div class="param-desc"><span class="param-type"><a href="#double">Double</a></span>  format: double</div>
+<div class="param">badgeName </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">valueToReach </div><div class="param-desc"><span class="param-type"><a href="#double">Double</a></span>  format: double</div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>
