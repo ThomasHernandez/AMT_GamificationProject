@@ -57,7 +57,7 @@ command. This should build the mysql, phpmyadmin and springserver images and sta
 To access the main application go to:
 [http://192.168.99.100:8080/api/swagger-ui.html](http://192.168.99.100:8080/api/swagger-ui.html) , it will display the swagger-ui GUI which allows to send requests on the API
 
-
+The topology relies on a remote MySQL server. For simplicity the source code is setup by default thus Spring-Boot will use the H2 in memory datastore if you run the platform in NetBeans. If you want to change to a MySQL configuration just uncomment the parts in the **application.properties** in the NetBeans project
 
 
 **N.B: The IP adress may vary depending on your docker machine configuration. For the demo application to work it is also required to change the variable $serverAdress in the files initamt.php, addmessage.php, profil.php int the *demoapplication* directory. This is due to the fact that docker-compose *links* didn't work properly with our PHP scripts**
