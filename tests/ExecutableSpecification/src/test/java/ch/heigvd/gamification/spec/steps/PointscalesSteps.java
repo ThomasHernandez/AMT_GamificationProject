@@ -16,8 +16,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 /**
+ * AMT - Gamification Project - Automated Tests
  *
- * @author romai
+ * @author Albasini Romain, Ciani Antony, Hernandez Thomas, Selimi Dardan
  */
 public class PointscalesSteps {
 

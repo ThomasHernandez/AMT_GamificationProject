@@ -19,8 +19,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 /**
+ * AMT - Gamification Project - Automated Tests
  *
- * @author romai
+ * @author Albasini Romain, Ciani Antony, Hernandez Thomas, Selimi Dardan
  */
 public class EventsSteps {
 
@@ -79,18 +80,14 @@ public class EventsSteps {
 
    @When("^I POST (\\d+) times to the /event endpoint for (.*) for user (.*)$")
    public void i_POST_times_to_the_event_endpoint_for_A_for_user_U(int nbEvents, String applicationReference, String userReference) throws Throwable {
-
       for (int i = 0; i < nbEvents; ++i) {
          NewGameEvent ge = new NewGameEvent();
          ge.setAppUserId(userReference);
          ge.setEventType("eEventType");
-
          String token = applicationsTokens.get(applicationReference);
-
          try {
             ApiResponse response = api.eventsPostWithHttpInfo(token, ge);
             statusCode = response.getStatusCode();
-
          } catch (ApiException e) {
             statusCode = e.getCode();
          }

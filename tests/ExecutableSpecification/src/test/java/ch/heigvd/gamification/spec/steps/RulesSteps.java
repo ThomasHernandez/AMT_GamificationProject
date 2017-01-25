@@ -18,8 +18,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 /**
+ * AMT - Gamification Project - Automated Tests
  *
- * @author romai
+ * @author Albasini Romain, Ciani Antony, Hernandez Thomas, Selimi Dardan
  */
 public class RulesSteps {
 
@@ -39,7 +40,7 @@ public class RulesSteps {
    private final Map<String, AppCredentials> applicationsCredentials = new HashMap<>();
    private final Map<String, NewPointScale> pointscalesList = new HashMap<>();
    private final Map<String, NewBadge> badgesList = new HashMap<>();
-   
+
    @Given("^a new \\(rules\\) gamified application (.*) with a badge (.*) and a pointscale (.*)$")
    public void a_new_rules_gamified_application_A_with_a_badge_B_and_a_pointscale_P(String applicationReference, String badgeReference, String pointscaleReference) throws Throwable {
       String randomApplicationName = "app-name-rules-" + (nbApps++) + '-' + System.currentTimeMillis();
@@ -54,14 +55,13 @@ public class RulesSteps {
       ac.setAppPassword(DEFAULT_PASSWORD);
       String token = api.authPost(ac);
 
-      
       // Pointscale
       NewPointScale p = new NewPointScale();
       p.setName(pointscaleReference);
       p.setDescription("pointscaleDesc");
       p.setUnit("pointscaleUnit");
       api.pointscalesPost(token, p);
-      
+
       // Badge
       NewBadge b = new NewBadge();
       b.setName(badgeReference);
@@ -72,8 +72,8 @@ public class RulesSteps {
       applications.put(applicationReference, newGamifiedApplication);
       applicationsTokens.put(applicationReference, token);
       applicationsCredentials.put(applicationReference, ac);
-      badgesList.put(badgeReference,b);
-      pointscalesList.put(pointscaleReference,p);
+      badgesList.put(badgeReference, b);
+      pointscalesList.put(pointscaleReference, p);
    }
 
    @When("^I POST to the /rules endpoint for (.*) with a badge (.*) and a pointscale (.*)$")
@@ -82,8 +82,7 @@ public class RulesSteps {
       String ps = p.getName();
       NewBadge b = badgesList.get(badgeReference);
       String bs = b.getName();
-      
-      
+
       NewRule r = new NewRule();
       r.setName("rName");
       r.setDescription("rDesc");
@@ -91,20 +90,20 @@ public class RulesSteps {
       r.setPointScaleName(ps);
       r.setBadgeName(bs);
       r.setValueToReach(3.0);
-      r.setPointsToAdd(3.0); 
-      
+      r.setPointsToAdd(3.0);
+
       try {
          ApiResponse response = api.rulesPostWithHttpInfo(applicationsTokens.get(applicationReference), r);
          statusCode = response.getStatusCode();
       } catch (ApiException e) {
          statusCode = e.getCode();
       }
-      
+
    }
-   
+
    @When("^I POST to the /rules endpoint with wrong token for (.*)$")
-public void i_POST_to_the_rules_endpoint_with_wrong_token_for_A(String applicationReference) throws Throwable {
-    NewRule r = new NewRule();
+   public void i_POST_to_the_rules_endpoint_with_wrong_token_for_A(String applicationReference) throws Throwable {
+      NewRule r = new NewRule();
       r.setName("rName");
       r.setDescription("rDesc");
       r.setEventType("rEvent");
@@ -112,14 +111,14 @@ public void i_POST_to_the_rules_endpoint_with_wrong_token_for_A(String applicati
       r.setBadgeName("rBadge");
       r.setValueToReach(3.0);
       //r.setPointsToAdd(3.0); Méthode n'existe pas
-      
+
       try {
          ApiResponse response = api.rulesPostWithHttpInfo(INVALID_TOKEN, r);
          statusCode = response.getStatusCode();
       } catch (ApiException e) {
          statusCode = e.getCode();
       }
-}
+   }
 
    @Then("^I receive a (\\d+) status code \\(rules\\)$")
    public void i_receive_a_status_code_rules(int arg1) throws Throwable {

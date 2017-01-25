@@ -19,8 +19,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 /**
+ * AMT - Gamification Project - Automated Tests
  *
- * @author romai
+ * @author Albasini Romain, Ciani Antony, Hernandez Thomas, Selimi Dardan
  */
 public class UsersSteps {
 
@@ -54,7 +55,7 @@ public class UsersSteps {
       ac.setAppName(randomApplicationName);
       ac.setAppPassword(DEFAULT_PASSWORD);
       String token = api.authPost(ac);
-      
+
       // Event
       NewGameEvent ge = new NewGameEvent();
       ge.setAppUserId(userReference);
@@ -69,7 +70,7 @@ public class UsersSteps {
    @When("^I GET to the /users endpoint for (.*) for user (.*)$")
    public void i_GET_to_the_users_endpoint_for_A_for_user_U(String applicationReference, String userReference) throws Throwable {
       String token = applicationsTokens.get(applicationReference);
-      
+
       try {
          ApiResponse response = api.usersIdInApplicationGetWithHttpInfo(token, userReference);
          statusCode = response.getStatusCode();

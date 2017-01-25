@@ -3,11 +3,14 @@ info:
   version: '1.0.0'
   title: AMT Gamification API
   description: An API for gamifying any web application suitable to gamification concepts
+  termsOfService: https://github.com/antonyciani/AMT_GamificationProject
   contact:
     name: ALBASINI Romain, CIANI Antony, HERNANDEZ Thomas, SELIMI Dardan
     email: antony.ciani@heig-vd.ch
     url: https://github.com/antonyciani/AMT_GamificationProject
-
+  license:
+    name: MIT
+    url: https://github.com/antonyciani/AMT_GamificationProject
 host: localhost:8080
 basePath: /api
 schemes:
@@ -266,6 +269,34 @@ paths:
            description:
               User not found
               
+  /leaderboard/{pointScaleName}:
+    get:
+      description:  Retrieve users ranking for a given pointScale and a given application
+      produces:
+        - application/json
+      parameters:
+        - name: authToken
+          in: header
+          description: The token authenticating the ranked application 
+          required: true
+          type: string
+        - name: pointScaleName
+          in: path
+          description: pointScale on which users are ranked
+          required: true
+          type: string
+      responses:
+        '200':
+          description:
+              Returns the users ordered by their current value on the specified pointScale
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/applicationUserToClient'
+        '404':
+           description:
+              No users found
+           
   /auth:
     post:
       description: get authentication token from registered application
