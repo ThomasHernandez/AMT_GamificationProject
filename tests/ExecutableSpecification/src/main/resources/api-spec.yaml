@@ -1,0 +1,535 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: AMT Gamification API
+  description: An API for gamifying any web application suitable to gamification concepts
+  contact:
+    name: ALBASINI Romain, CIANI Antony, HERNANDEZ Thomas, SELIMI Dardan
+    email: antony.ciani@heig-vd.ch
+    url: https://github.com/antonyciani/AMT_GamificationProject
+
+host: localhost:8080
+basePath: /api
+schemes:
+  - http
+
+paths:
+  /badges:
+    get:
+      
+      description: Returns all badges from the system that the user has access to
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: badges response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/badgeToClient'
+        
+    post:
+      description: Creates a new badge in the system.  Duplicates are allowed
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: authToken
+          in: header
+          description: The token authenticating the application related to the badge
+          required: true
+          type: string
+            
+        - name: newBadge
+          in: body
+          description: Badge to add to the system
+          required: true
+          schema:
+            $ref: '#/definitions/newBadge'
+      responses:
+        '200':
+          description: badge creation response
+          schema:
+            $ref: '#/definitions/badgeToClient'
+        
+  /badges/{id}:
+    get:
+      description: Returns a badge based on a single ID
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of the badge to fetch
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: badge response
+          schema:
+            $ref: '#/definitions/badgeToClient'
+        
+    delete:
+      description: deletes a single badge based on the ID supplied
+      parameters:
+        - name: id
+          in: path
+          description: ID of badge to delete
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: badge deleted
+        
+            
+  /pointscales:
+    get:
+      description: Returns all pointscales from the system that the user has access to
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: pointscales response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/pointScaleToClient'
+        
+    post:
+      description: Creates a new pointScale in the system.  Duplicates are allowed
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: authToken
+          in: header
+          description: The token authenticating the application related to the pointscale
+          required: true
+          type: string
+        - name: newPointScale
+          in: body
+          description: PointScale to add to the system
+          required: true
+          schema:
+            $ref: '#/definitions/newPointScale'
+      responses:
+        '200':
+          description: pointScale response
+          schema:
+            $ref: '#/definitions/pointScaleToClient'
+        
+  /pointscales/{id}:
+    get:
+      description: Returns the details of the pointscale based on a single ID
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of pointScale to fetch
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: pointScale response
+          schema:
+            $ref: '#/definitions/pointScaleToClient'
+        
+    delete:
+      description: deletes a single pointScale based on the ID supplied
+      parameters:
+        - name: id
+          in: path
+          description: ID of pointScale to delete
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: pointScale deleted
+          
+          
+  /applications:
+    get:
+      description: Returns all applications from the system that the user has access to
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: applications response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/gamifiedApplicationToClient'
+ 
+  /registrations:      
+    post:
+      description: Registers a new application in the system.  Duplicates are not allowed
+      consumes:
+        - application/json
+      parameters:
+        - name: newGamifiedApplication
+          in: body
+          description: PointScale to add to the system
+          required: true
+          schema:
+            $ref: '#/definitions/newGamifiedApplication'
+      responses:
+        '201':
+          description: new application created
+        '409':
+          description: application name already exists
+        
+  /applications/{id}:
+    get:
+      description: Returns the details of the application based on a single ID
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of gamified application to fetch
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: application response
+          schema:
+            $ref: '#/definitions/gamifiedApplicationToClient'
+        
+    delete:
+      description: deletes a single application based on the ID supplied
+      parameters:
+        - name: id
+          in: path
+          description: ID of application to delete
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: application deleted
+          
+  /events:
+    post:
+      description: Send events to the event processor
+      consumes:
+        - application/json
+      parameters:
+        - name: authToken
+          in: header
+          description: The token authenticating the application related to the event
+          required: true
+          type: string
+        - name: newGameEvent
+          in: body
+          description: game event to be processed by the system
+          required: true
+          schema:
+            $ref: '#/definitions/newGameEvent'
+      responses:
+        '202':
+          description: gameEvent accepted
+        '422':
+          description: gameEvent unprocessable
+          
+  
+  /users/{idInApplication}:
+    get:
+      description:  Retrieve one user by id
+      produces:
+        - application/json
+      parameters:
+        - name: authToken
+          in: header
+          description: The token authenticating the application related to the user
+          required: true
+          type: string
+        - name: idInApplication
+          in: path
+          description: id of the user to fetch
+          required: true
+          type: string
+      responses:
+        '200':
+          description:
+              Returns the specified user state
+          schema:
+            $ref: '#/definitions/applicationUserToClient'
+        '404':
+           description:
+              User not found
+              
+  /auth:
+    post:
+      description: get authentication token from registered application
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+      parameters:
+        - name: credentials
+          in: body
+          description: the target app credentials
+          required: true
+          schema:
+            $ref: '#/definitions/appCredentials'
+      responses:
+        '200':
+          description: good credentials, auth token
+          schema:
+            type: string
+        '400':
+          description: bad credentials
+          
+  /rules:
+    post:
+      description: set a new rule for a given application and a given pointscale awarding a given badge
+      consumes:
+        - application/json
+      parameters:
+        - name: authToken
+          in: header
+          description: The token authenticating the application related to the rule
+          required: true
+          type: string
+        - name: newRule
+          in: body
+          description: The new rule to set
+          required: true
+          schema:
+            $ref: '#/definitions/newRule'
+      responses:
+        '201':
+          description: rule created
+        '422':
+          description: rule unprocessable
+  
+  
+
+definitions:
+  badgeToClient:
+    type: object
+    required:
+      - id
+      - name
+      - description
+      - imageURI
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      description:
+        type: string
+      imageURI:
+        type: string
+  newBadge:
+    type: object
+    required:
+      - name
+      - description
+      - imageURI
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      imageURI:
+        type: string
+  pointScaleToClient:
+    type: object
+    required:
+      - id
+      - name
+      - description
+      - unit
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      description:
+        type: string
+      unit:
+        type: string
+
+  newPointScale:
+    type: object
+    required:
+      - name
+      - description
+      - unit
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      unit:
+        type: string
+  
+  newGamifiedApplication:
+    type: object
+    required:
+      - name
+      - password
+    properties:
+      name:
+        type: string
+      password:
+        type: string
+      
+  gamifiedApplicationToClient:
+    type: object
+    required:
+      - name
+      - authToken
+      - badges
+      - pointScales
+      - rules
+    properties:
+      name:
+        type: string
+      authToken:
+        type: string
+      badges:
+        type: array
+        items: 
+          $ref: '#/definitions/badgeToClient'
+      pointScales:
+        type: array
+        items: 
+          $ref: '#/definitions/pointScaleToClient'
+      rules:
+        type: array
+        items: 
+          $ref: '#/definitions/ruleToClient'
+  
+  newGameEvent:
+    type: object
+    required:
+      - appUserId
+      - eventType
+    properties:
+      appUserId:
+        type: string
+      eventType:
+        type: string
+        
+  appCredentials:
+    type: object
+    required:
+      - appName
+      - appPassword
+    properties:
+      appName:
+        type: string
+      appPassword:
+        type: string
+        
+  applicationUserToClient:
+    type: object
+    required:
+      - id
+      - applicationName
+      - idInApplication
+      - awardedBadges
+      - currentPoints
+      - nbEvents
+    properties:
+      id:
+        type: integer
+        format: int64
+      applicationName:
+        type: string
+      idInApplication:
+        type: string
+      awardedBadges:
+        type: array
+        items: 
+          $ref: '#/definitions/badgeToClient'
+      currentPoints:
+        type: array
+        items: 
+          $ref: '#/definitions/currentPointsToClient'
+      nbEvents:
+        type: integer
+        format: int32
+      
+      
+  newRule:
+    type: object
+    required:
+      - name
+      - description
+      - eventType
+      - pointScaleName
+      - pointsToAdd
+      - badgeName
+      - valueToReach
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      eventType:
+        type: string
+      pointScaleName:
+        type: string
+      pointsToAdd:
+        type: number
+        format: double
+      badgeName:
+        type: string
+      valueToReach:
+        type: number
+        format: double
+        
+  ruleToClient:
+    type: object
+    required:
+      - name
+      - description
+      - eventType
+      - pointScaleName
+      - pointsToAdd
+      - badgeName
+      - valueToReach
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      eventType:
+        type: string
+      pointScaleName:
+        type: string
+      pointsToAdd:
+        type: number
+        format: double
+      badgeName:
+        type: string
+      valueToReach:
+        type: number
+        format: double
+        
+  
+  currentPointsToClient:
+    type: object
+    required:
+      - pointScaleName
+      - currentValue
+    properties:
+      pointScaleName:
+        type: string
+      currentValue:
+        type: number
+        format: double
