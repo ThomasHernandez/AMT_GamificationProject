@@ -2,7 +2,11 @@ package ch.heigvd.gamification.spec;
 
 /**
  *
- * @author Olivier Liechti (olivier.liechti@heig-vd.ch)
+ * @author Albasini Romain
+ * @author Ciani Antony 
+ * @author Hernandez Thomas
+ * @author Selimi Dardan
+ * 
  */
 public class Specification {
 

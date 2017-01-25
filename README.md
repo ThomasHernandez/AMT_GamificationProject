@@ -35,11 +35,44 @@ Run the
 command. This should build the mysql, phpmyadmin and springserver images and start them.
 
 To access the main application go to:
+[http://192.168.99.100:8080/api/swagger-ui.html](http://192.168.99.100:8080/api/swagger-ui.html)
 
-[http://localhost:8080/api/](http://localhost:8080/api/)
+**N.B: The IP adress may vary depending on your docker machine configuration**
 
-Here, the documentation of our API is available, generated from swagger.
 
-## Test
+## Tests
 
-todo
+
+We developed automated tests to check the correct and expected behavior of our API.  
+The tests have been implemented with [Cucumber](https://cucumber.io/). Multiple scenarios were written using the [Gherkin](https://github.com/cucumber/cucumber/wiki/Gherkin) syntax. 
+
+Every endpoint of our API has been tested independently through the following features :  
+
+- **/application**, **/registrations** (`01_applicationEndpoint.feature`, `ApplicationSteps.java`)  
+- **/auth** (`02_authenticationEndpoint.feature`, `AuthenticationSteps.java`)  
+- **/badges** (`03_badgesEndpoint.feature`, `BadgesSteps.java`)  
+- **/pointscales** (`04_pointscalesEndpoint.feature`, `PointscalesSteps.java`)  
+- **/rules** (`05_rulesEndpoint.feature`, `RulesSteps.java`)  
+- **/events** (`06_eventsEndpoint.feature`, `EventsSteps.java`)  
+- **/users** (`07_usersEndpoint.feature`, `UsersSteps.java`)  
+
+Finally, we tested the interaction between multiple endpoints through the following feature :
+
+- `08_multipleEndpoints.feature`, `MultipleEndpointsSteps.java`  
+
+Additionally, two features have been written to test our API's concurrency behavior :  
+
+- `09_concurrencyTesting.feature`, `ConcurrencyTestingSteps.java`
+- `10_eventsEndpointConcurrency.feature`, `EventsConcurrencySteps.java`
+
+All those feature result in executing **149 tests** over our API, with a success rate of **100.0%**.
+
+### How to run the automated tests
+- Open in `NetBeans` the `GamificationAPI` project. 
+- Open in `NetBeans` the `ExecutableSpecification` project.
+- Run the server : *Right-clic on the GamificationAPI project -> Run Maven -> spring-boot:run*
+- Run the tests : 
+    - *Right-click on the ExecutableSpecification project -> Clean*
+    - *Right-click on the ExecutableSpecification project -> Test*
+- Satisfyingly observe the **100.0%** success rate.
+
