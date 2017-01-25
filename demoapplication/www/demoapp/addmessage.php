@@ -53,7 +53,7 @@ if (!isset($_SESSION['id'])){
 			
 			// s'identifer pour récupérer token
 			
-			$data = array('appName'=>'demo2','appPassword'=>'toor');
+			$data = array('appName'=>'demo','appPassword'=>'toor');
 			$data_json = json_encode($data);
 			$url = "http://localhost:8080/api/auth";
 

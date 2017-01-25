@@ -10,7 +10,7 @@ if (!isset($_SESSION['id'])){
 
 //--- AUTH ---
 
-$data = array('appName'=>'demo2','appPassword'=>'toor');
+$data = array('appName'=>'demo','appPassword'=>'toor');
 $data_json = json_encode($data);
 $url = "http://localhost:8080/api/auth";
 
@@ -67,8 +67,8 @@ $body = substr($response, $header_size);
 
 curl_close($ch);
 //var_dump($responses);
-var_dump(json_decode($header));
-var_dump(json_decode($body));
+//var_dump(json_decode($header));
+//var_dump(json_decode($body));
 $obj = json_decode($body);
 
 if(!empty($obj)){

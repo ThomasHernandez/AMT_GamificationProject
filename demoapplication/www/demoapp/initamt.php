@@ -1,7 +1,7 @@
 <?php
 //--- Registrations ---
 
-$data = array('name'=>'demo2','password'=>'toor');
+$data = array('name'=>'demo','password'=>'toor');
 $data_json = json_encode($data);
 $url = "http://localhost:8080/api/registrations";
 
@@ -29,7 +29,7 @@ var_dump($header);
 
 //--- AUTH ---
 
-$data = array('appName'=>'demo2','appPassword'=>'toor');
+$data = array('appName'=>'demo','appPassword'=>'toor');
 $data_json = json_encode($data);
 $url = "http://localhost:8080/api/auth";
 
@@ -63,7 +63,7 @@ var_dump($header);
 
 //--- POST /BADGE ---
 
-$data = array('description'=>'yolo!','imageURI'=>'http://www.needmail.net/mail.jpg','name'=>'mail');
+$data = array('description'=>'send 3 mails','imageURI'=>'http://www.needmail.net/mail.jpg','name'=>'3mails');
 $data_json = json_encode($data);
 $url = "http://localhost:8080/api/badges";
 
@@ -93,7 +93,7 @@ var_dump($body);
 
 //--- POST /pointscales ---
 
-$data = array('description'=>'echelle','name'=>'scale','unit'=>'point');
+$data = array('description'=>'echelle','name'=>'mail scale','unit'=>'point');
 $data_json = json_encode($data);
 $url = "http://localhost:8080/api/pointscales";
 
@@ -123,7 +123,7 @@ var_dump($body);
 
 //--- POST /rules add point on PS ---
 
-$data = array('badgeName'=>'','description'=>'1point','eventType'=>'plus1','name'=>'myRule','pointScaleName'=>'scale','pointsToAdd'=>1,'valueToReach'=>0);
+$data = array('badgeName'=>'','description'=>'1point','eventType'=>'plus1','name'=>'myRule','pointScaleName'=>'mail scale','pointsToAdd'=>1,'valueToReach'=>0);
 $data_json = json_encode($data);
 $url = "http://localhost:8080/api/rules";
 
@@ -153,7 +153,7 @@ var_dump($body);
 
 //--- POST /rules give badge when nb point reach ---
 
-$data = array('badgeName'=>'mail','description'=>'giveBadge','eventType'=>'winMail','name'=>'myRule2','pointScaleName'=>'scale','pointsToAdd'=>0,'valueToReach'=>3);
+$data = array('badgeName'=>'3mails','description'=>'giveBadge','eventType'=>'winMail','name'=>'myRule2','pointScaleName'=>'mail scale','pointsToAdd'=>0,'valueToReach'=>3);
 $data_json = json_encode($data);
 $url = "http://localhost:8080/api/rules";
 
